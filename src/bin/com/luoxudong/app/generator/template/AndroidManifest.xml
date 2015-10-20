@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.gjfax.app"
+    android:versionCode="50"
+    android:versionName="V2.0.0.5" >
+
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="22" /><!-- 解决Android L上通知显示异常问题，targetSdkVersion需要设置成22 songting -->
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" /><!-- 蓝牙分享所需的权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /><!-- 浮动通知权限 -->
+    <uses-permission android:name="getui.permission.GetuiService.com.gjfax.app" />
+    <permission android:name="getui.permission.GetuiService.com.gjfax.app" android:protectionLevel="normal"/>
+
+    <application
+        android:name=".logic.common.BaseApplication"
+        android:allowBackup="false"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Gjfax.Theme.NoTitleBar" >
+
+        <!--
+		官网：0_gjfax
+		Google Play:0_googleplay
+		安卓市场：1_hiapk
+		安智市场：2_anzhi
+		91手机助手:3_91
+		豌豆荚：4_wandoujia
+		应用宝：5_myapp
+		百度助手：6_baidu
+		淘宝市场：7_taobao
+		应用汇：8_appchina
+		机锋市场：10_gfan
+		N多市场：11_nduoa
+		木蚂蚁：12_mumayi
+		十字猫：14_crossmo
+		sogo应用商店：17_sogoustore
+		360手机助手:18_360market
+		UC应用商店：19_uc
+		sogo助手：20_sogou
+		当乐网：21_dangle
+		华为智汇云：22_huawei
+		小米商店：23_mi
+		联想乐商店：24_lenovomm
+		魅族store：25_meizu
+		金立商店(易用汇）：26_anzhuoapk
+		中兴商店(外包安卓市场）：27_ztems
+		oppo：28_oppo
+		移动mm：30_10086mm
+		天翼空间：31_189store
+		苏宁应用中心：33_suning
+		网易应用中心：34_163
+        -->
+        <!-- 配置项 -->
+        <meta-data android:name="LogEnable" android:value="false" /> <!-- 是否显示日志信息 -->
+        <meta-data android:name="ShowUncaughtexception" android:value="false" /> <!-- 是否显示未捕获异常信息 -->
+        <meta-data android:name="UMENG_APPKEY" android:value="555da49167e58e8c81000e55" /> <!-- 友盟统计APPKEY -->
+        <meta-data android:name="UMENG_CHANNEL" android:value="0_gjfax" /> <!-- 友盟统计渠道号 -->
+        <meta-data android:name="TINGYUN_APPKEY" android:value="b910a4da01c940df81db279e739bae83" /> <!-- 听云APPKEY -->
+        <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="8nDyBt2qPucP4hG7OTxXnneC" /> <!-- 百度定位 -->
+        <meta-data android:name="IsRelease" android:value="false" /> <!-- 是否为发布版本 -->
+        <meta-data android:name="ReleaseServer" android:value="https://app.gjfax.com" /> <!-- 生产环境 -->
+        <meta-data android:name="DebugServer" android:value="http://218.17.205.130:8107/APP_SERVER" /> <!-- 测试环境 -->
+        <!-- <meta-data android:name="DebugServer" android:value="http://10.50.145.71:8080/APP_SERVER" /> --> <!-- 集成测试环境 -->
+        <!-- <meta-data android:name="DebugServer" android:value="http://10.100.153.200:8080/app_server" /> -->
+        <!-- <meta-data android:name="DebugServer" android:value="http://10.100.155.87:8080/app_server" /> -->
+ 		<!-- <meta-data android:name="DebugServer" android:value="http://10.100.154.82:8080/app_server" /> -->
+        <!-- <meta-data android:name="DebugServer" android:value="http://10.100.155.112:8080/app_server" /> --><!-- 曹华电脑 -->
+
+        <activity
+            android:name=".ui.activities.SplashActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Gjfax.Theme.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activities.MainActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.TestClearEditText"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.RegActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.LoginActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.ProductDetailActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.BeginnerProductActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.UserCenterActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.MessageCenterActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.ActivityCenterActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.WebActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.LatestNewsActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.LatestNewsFragmentActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.HelpCenterActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.FeedbackActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.PasswordManagerActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.ModifyLoginPwdActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.SetPayPwdActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.SetNewPwdActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.ModifyPayPwdActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.VerifyMessageCodeActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.GestureEditActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.GestureVerifyActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.GestureLoginActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.ChooseQuestionActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.FillSafeQuestionActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.VerifySafeQuestionActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.RetrievePasswordActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.AddBankActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.BankListActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.SureAddBankActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.AddBankCardSuccessActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.AddBankCardFailActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.MyBankCardActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.UnBindCardActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.UpgradeBankTipActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.UpgradeBankActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.UpgradeBankSuccessActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+         <activity
+            android:name=".ui.activities.UpgradeBankFailActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.CertificationActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.CertificationResultActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.EditNickNameActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.InvestActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.RechargeActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.WithdrawActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- 我的投资 -->
+        <activity
+            android:name=".ui.activities.MyInvestActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- 我的投资-已兑付详情 -->
+        <activity
+            android:name=".ui.activities.WithdrawDetailActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 我的转让 -->
+        <activity
+            android:name=".ui.activities.MyTransferActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 转让详情 -->
+        <activity
+            android:name=".ui.activities.TransDetailActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 转让信息 -->
+        <activity
+            android:name=".ui.activities.TransInfoActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 功能尚在开发 -->
+        <activity
+            android:name=".ui.activities.NoFunctionActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/Gjfax.Theme.NoTitleBar.Transparent" >
+        </activity>
+        <!-- 转让确认 -->
+        <activity
+            android:name=".ui.activities.TransConfirmActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait"
+             android:theme="@style/Gjfax.Theme.NoTitleBar.DialogAct" >
+        </activity>
+        <!-- 转让成功 -->
+        <activity
+            android:name=".ui.activities.TransSuccessActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 取消转让 -->
+        <activity
+            android:name=".ui.activities.TransCancelActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait"
+             android:theme="@style/Gjfax.Theme.NoTitleBar.DialogAct" >
+        </activity>
+        <!-- 我的积分 -->
+        <activity
+            android:name=".ui.activities.MyGjfaxPointActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 投资记录 -->
+        <activity
+            android:name=".ui.activities.InvestRecordActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.InvestPayDetailActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/Gjfax.Theme.NoTitleBar.DialogAct" >
+        </activity>
+        <activity
+            android:name=".ui.activities.InvestResultActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.RewardsActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.UnopenedRwardActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.InsuranceDetailActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.InsuranceProtocolActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.InsuranceCheckActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.InsuranceProtocolListActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.ConfirmPayActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/Gjfax.Theme.NoTitleBar.DialogAct" >
+        </activity>
+        <activity
+            android:name=".ui.activities.AssetsRecordActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.TotalAssetsActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.MyGjfaxCoinActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.RechargeSucActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.WithdrawSucActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.EntityRewardActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.RegResultActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.SpeciallyInviteProductActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.MyRedPackedActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.MyPropActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.RewardHistoryActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.UnknowRewardActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.NewUserInvestActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.NewUserPayDetailActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/Gjfax.Theme.NoTitleBar.DialogAct" >
+        </activity>
+        <activity
+            android:name=".ui.activities.ExperResultActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.GfaxCoinTransferActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.ConfirmInfoCoinTransferActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.GfaxCoinTransferSucActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.MyRecommendActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.NoticeClickActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.activities.GuideActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/Gjfax.Theme.NoTitleBar.Fullscreen" >
+        </activity>
+
+        <receiver
+            android:name="com.gjfax.app.logic.common.BaseReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.gjfax.app.ACTION_DOWNLOAD_APP" />
+            </intent-filter>
+        </receiver>
+
+        <!-- ShareSDK -->
+        <!-- 微信分享回调 -->
+        <activity
+            android:name="com.gjfax.app.ui.activities.wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="cn.sharesdk.framework.ShareSDKUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/Gjfax.Theme.NoTitleBar.DialogAct"
+            android:windowSoftInputMode="stateHidden|adjustResize" >
+            <intent-filter>
+                <data android:scheme="tencent100371282" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- 个推SDK配置开始 -->
+        <!-- 配置的第三方参数属性 -->
+        <meta-data
+            android:name="PUSH_APPID"
+            android:value="hf5FPnENB5ADGptar2HBN4" /> <!-- APPID -->
+        <meta-data
+            android:name="PUSH_APPKEY"
+            android:value="YBAN8yR7MT7F27b2lkKDj6" /> <!-- APPKEY -->
+        <meta-data
+            android:name="PUSH_APPSECRET"
+            android:value="dCnzvPjumX7fYPrP06AIt7" /> <!-- APPSECRET -->
+        <!-- 配置第三方Receiver -->
+        <receiver
+            android:name="com.gjfax.app.ui.receiver.PushMsgReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.hf5FPnENB5ADGptar2HBN4" />
+            </intent-filter>
+        </receiver>
+        <!-- 配置SDK核心服务 -->
+        <service
+            android:name="com.igexin.sdk.PushService"
+            android:exported="true"
+            android:label="NotificationCenter"
+            android:process=":pushservice" >
+        </service>
+        <service
+            android:name="com.igexin.sdk.PushServiceUser"
+            android:exported="true"
+            android:label="NotificationCenterUser" >
+        </service>
+
+        <receiver android:name="com.igexin.sdk.PushReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="com.igexin.sdk.action.refreshls" />
+                <!-- 以下三项为可选的action声明，可大大提高service存活率和消息到达速度 -->
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.igexin.sdk.PushManagerReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.pushmanager" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.igexin.sdk.PushActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:process=":pushservice"
+            android:taskAffinity="com.igexin.sdk.PushActivityTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+
+        <service
+            android:name="com.igexin.download.DownloadService"
+            android:process=":pushservice" />
+
+        <receiver android:name="com.igexin.download.DownloadReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name="com.igexin.download.DownloadProvider"
+            android:authorities="downloads.com.gjfax.app"
+            android:exported="true"
+            android:process=":pushservice" />
+
+        <activity
+            android:name="com.igexin.getuiext.activity.GetuiExtActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:process=":pushservice"
+            android:taskAffinity="android.task.myServicetask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <receiver
+            android:name="com.igexin.getuiext.service.PayloadReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4" />
+                <action android:name="com.igexin.sdk.action.hf5FPnENB5ADGptar2HBN4" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.igexin.getuiext.service.GetuiExtService"
+            android:process=":pushservice" />
+
+        <!-- 个推SDK配置结束 -->
+    </application>
+
+</manifest>

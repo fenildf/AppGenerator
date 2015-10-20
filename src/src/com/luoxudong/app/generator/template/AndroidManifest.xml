@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="#{AppPackage}"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="22" /><!-- 解决Android L上通知显示异常问题，targetSdkVersion需要设置成2 -->
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /><!-- 浮动通知权限 -->
+
+    <application
+        android:name=".logic.common.BaseApplication"
+        android:allowBackup="false"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Gjfax.Theme.NoTitleBar" >
+
+        <!-- 配置项 -->
+        <meta-data android:name="LogEnable" android:value="false" /> <!-- 是否显示日志信息 -->
+        <meta-data android:name="ShowUncaughtexception" android:value="false" /> <!-- 是否显示未捕获异常信息 -->
+        <meta-data android:name="UMENG_APPKEY" android:value="555da49167e58e8c11000e55" /> <!-- 友盟统计APPKEY -->
+        <meta-data android:name="UMENG_CHANNEL" android:value="#{ProjectName}" /> <!-- 友盟统计渠道号 -->
+        <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="8nDyBt2qPucP4hG7OTxXnneC" /> <!-- 百度定位 -->
+        <meta-data android:name="IsRelease" android:value="false" /> <!-- 是否为发布版本 -->
+        <meta-data android:name="ReleaseServer" android:value="http://m.luoxudong.com" /> <!-- 生产环境 -->
+        <meta-data android:name="DebugServer" android:value="http://dep.luoxudong.com" /> <!-- 测试环境 -->
+        
+        <activity
+            android:name=".ui.activities.SplashActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Gjfax.Theme.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activities.MainActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+        <receiver
+            android:name="#{ProjectName}.logic.common.BaseReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="#{ProjectName}.ACTION_DOWNLOAD_APP" />
+            </intent-filter>
+        </receiver>
+
+        <!-- ShareSDK -->
+        <!-- 微信分享回调 -->
+        <activity
+            android:name="#{ProjectName}.ui.activities.wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="cn.sharesdk.framework.ShareSDKUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/Gjfax.Theme.NoTitleBar.DialogAct"
+            android:windowSoftInputMode="stateHidden|adjustResize" >
+            <intent-filter>
+                <data android:scheme="tencent100371282" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- 个推SDK配置开始 -->
+        <!-- 配置的第三方参数属性 -->
+        <meta-data
+            android:name="PUSH_APPID"
+            android:value="hf5FPnENB5ADGptar2HBN4" /> <!-- APPID -->
+        <meta-data
+            android:name="PUSH_APPKEY"
+            android:value="YBAN8yR7MT7F27b2lkKDj6" /> <!-- APPKEY -->
+        <meta-data
+            android:name="PUSH_APPSECRET"
+            android:value="dCnzvPjumX7fYPrP06AIt7" /> <!-- APPSECRET -->
+        <!-- 配置第三方Receiver -->
+        <receiver
+            android:name="com.gjfax.app.ui.receiver.PushMsgReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.hf5FPnENB5ADGptar2HBN4" />
+            </intent-filter>
+        </receiver>
+        <!-- 配置SDK核心服务 -->
+        <service
+            android:name="com.igexin.sdk.PushService"
+            android:exported="true"
+            android:label="NotificationCenter"
+            android:process=":pushservice" >
+        </service>
+        <service
+            android:name="com.igexin.sdk.PushServiceUser"
+            android:exported="true"
+            android:label="NotificationCenterUser" >
+        </service>
+
+        <receiver android:name="com.igexin.sdk.PushReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="com.igexin.sdk.action.refreshls" />
+                <!-- 以下三项为可选的action声明，可大大提高service存活率和消息到达速度 -->
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.igexin.sdk.PushManagerReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.pushmanager" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.igexin.sdk.PushActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:process=":pushservice"
+            android:taskAffinity="com.igexin.sdk.PushActivityTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+
+        <service
+            android:name="com.igexin.download.DownloadService"
+            android:process=":pushservice" />
+
+        <receiver android:name="com.igexin.download.DownloadReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name="com.igexin.download.DownloadProvider"
+            android:authorities="downloads.com.gjfax.app"
+            android:exported="true"
+            android:process=":pushservice" />
+
+        <activity
+            android:name="com.igexin.getuiext.activity.GetuiExtActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:process=":pushservice"
+            android:taskAffinity="android.task.myServicetask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <receiver
+            android:name="com.igexin.getuiext.service.PayloadReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4" />
+                <action android:name="com.igexin.sdk.action.hf5FPnENB5ADGptar2HBN4" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.igexin.getuiext.service.GetuiExtService"
+            android:process=":pushservice" />
+
+        <!-- 个推SDK配置结束 -->
+    </application>
+
+</manifest>
