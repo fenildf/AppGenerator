@@ -1,7 +1,7 @@
         <!-- ShareSDK -->
         <!-- 微信分享回调 -->
         <activity
-            android:name="#{AppPackage}.ui.activities.wxapi.WXEntryActivity"
+            android:name="#{AppPackage}.ui.activities.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
