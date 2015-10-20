@@ -1,0 +1,141 @@
+/**
+ * Title: AsyncHttpHelp.java
+ * Description: 
+ * Copyright: Copyright (c) 2013-2015 luoxudong.com
+ * Company: 个人
+ * Author: 罗旭东 (hi@luoxudong.com)
+ * Date: 2015年8月4日 下午5:34:53
+ * Version: 1.0
+ */
+package com.gjfax.app.ui.codestyle.simples;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import com.gjfax.app.logic.network.http.GjfaxJsonHttpResponseAdapter;
+import com.gjfax.app.logic.network.http.GjfaxSSLSocketFactory;
+import com.gjfax.app.logic.network.http.model.request.DefaultReq;
+import com.gjfax.app.logic.network.http.model.response.DefaultRsp;
+import com.luoxudong.app.asynchttp.AsyncHttpUtil;
+import com.luoxudong.app.asynchttp.callable.DownloadRequestCallable;
+import com.luoxudong.app.asynchttp.callable.JsonRequestCallable;
+import com.luoxudong.app.asynchttp.callable.SimpleRequestCallable;
+import com.luoxudong.app.asynchttp.utils.AsyncHttpLog;
+
+/** 
+ * <pre>
+ * ClassName: AsyncHttpHelp
+ * Description:TODO(这里用一句话描述这个类的作用)
+ * Create by: 罗旭东
+ * Date: 2015年8月4日 下午5:34:53
+ * </pre>
+ */
+public class AsyncHttpHelp {
+	public static void main(String[] args) {
+		//开启日志
+		AsyncHttpLog.enableLog();
+		
+		//管理日志
+		AsyncHttpLog.disableLog();
+		
+		//设置ssl传输
+		AsyncHttpUtil.setSSLSocketFactory(GjfaxSSLSocketFactory.getInstance());
+		
+		//设置json请求返回结果过滤
+		AsyncHttpUtil.setResponseAdapter(new GjfaxJsonHttpResponseAdapter());
+		
+		//普通get请求
+		AsyncHttpUtil.simpleGetHttpRequest("http://www.gjfax.com", new SimpleRequestCallable() {
+			
+			@Override
+			public void onFailed(int errorCode, String errorMsg) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		//get请求，更多参数设置
+		//AsyncHttpUtil.simpleGetHttpRequest(url, urlParams, callable);
+		//AsyncHttpUtil.simpleGetHttpRequest(url, urlParams, headerParams, timeout, callable);
+		
+		//普通post请求
+		AsyncHttpUtil.simplePostHttpRequest("http://www.gjfax.com", new SimpleRequestCallable() {
+			
+			@Override
+			public void onFailed(int errorCode, String errorMsg) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		//post请求，更多参数设置
+		//AsyncHttpUtil.simplePostHttpRequest(url, urlParams, headerParams, timeout, contentType, requestBody, callable);
+		
+		//post请求，请求参数以及返回结果都为对象形式
+		DefaultReq req = new DefaultReq();
+		AsyncHttpUtil.jsonPostHttpRequest("http://www.gjfax.com", req, DefaultRsp.class, new JsonRequestCallable<DefaultRsp>() {
+
+			@Override
+			public void onFailed(int errorCode, String errorMsg) {
+				
+			}
+		});
+		
+		//post请求，更多参数设置
+		//AsyncHttpUtil.jsonPostHttpRequest(url, headerParams, requestInfo, responseClass, callable);
+		//AsyncHttpUtil.jsonPostHttpRequest(url, urlParams, headerParams, timeout, contentType, requestInfo, responseClass, callable);
+		
+		//get请求，参会json对象
+		AsyncHttpUtil.jsonGetHttpRequest("http://www.gjfax.com", DefaultRsp.class, new JsonRequestCallable<DefaultRsp>() {
+
+			@Override
+			public void onFailed(int errorCode, String errorMsg) {
+				
+			}
+		});
+		
+		//get请求，更多参数
+		//AsyncHttpUtil.jsonGetHttpRequest(url, urlParams, headerParams, timeout, responseClass, callable);
+		
+		//form表单请求
+		Map<String, String> formDatas = new ConcurrentHashMap<String, String>();
+		formDatas.put("param", "1");
+		AsyncHttpUtil.formDataPostHttpRequest("http://www.gjfax.com", formDatas, new SimpleRequestCallable() {
+			
+			@Override
+			public void onFailed(int errorCode, String errorMsg) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		//form请求，更多参数设置
+		//AsyncHttpUtil.formDataPostHttpRequest(url, urlParams, headerParams, timeout, formDatas, callable);
+		//AsyncHttpUtil.formPostHttpRequest(url, formDatas, callable);
+		//AsyncHttpUtil.formPostHttpRequest(url, formDatas, responseClass, callable);
+		//AsyncHttpUtil.formPostHttpRequest(url, headerParams, formDatas, responseClass, callable);
+		//AsyncHttpUtil.formPostHttpRequest(url, urlParams, headerParams, timeout, contentType, formDatas, responseClass, callable);
+		
+		//普通文件下载
+		AsyncHttpUtil.download("http://www.gjfax.com", "sdcard", "a.txt", new DownloadRequestCallable() {
+			
+			@Override
+			public void onFailed(int errorCode, String errorMsg) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		//文件断点下载
+		//AsyncHttpUtil.download(url, fileDir, fileName, startPos, callable);
+		
+		//下载文件，更详细的参数设置
+		//AsyncHttpUtil.download(url, urlParams, headerParams, timeout, fileDir, fileName, startPos, endPos, callable);
+		
+		
+		//文件上传
+		//AsyncHttpUtil.upload(url, formDatas, name, file, callable);
+		//AsyncHttpUtil.upload(url, formDatas, name, fileWrapper, callable);
+		//AsyncHttpUtil.upload(url, urlParams, headerParams, timeout, formDatas, fileWrappers, callable);
+	}
+}

@@ -1,0 +1,102 @@
+/**
+ * Title: BaseCallable.java
+ * Description: 
+ * Copyright: Copyright (c) 2013-2015 luoxudong.com
+ * Company: 个人
+ * Author: 罗旭东 (hi@luoxudong.com)
+ * Date: 2015年8月4日 下午5:56:52
+ * Version: 1.0
+ */
+package com.gjfax.app.logic.common;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.text.TextUtils;
+
+import com.gjfax.app.R;
+import com.gjfax.app.logic.exception.GjfaxExceptionCode;
+import com.gjfax.app.logic.utils.ConfigUtil;
+import com.gjfax.app.logic.utils.GlobalUtil;
+import com.gjfax.app.ui.activities.GestureLoginActivity;
+import com.gjfax.app.ui.activities.LoginActivity;
+import com.luoxudong.app.asynchttp.exception.AsyncHttpExceptionCode;
+
+/**
+ * <pre>
+ * ClassName: BaseCallable
+ * Description:TODO(这里用一句话描述这个类的作用)
+ * Create by: 罗旭东
+ * Date: 2015年8月4日 下午5:56:52
+ * </pre>
+ */
+public abstract class BaseCallable {
+	/**
+	 * 返回失败
+	 * 
+	 * @param errorCode
+	 * @param msg
+	 */
+	public abstract void onCallbackFail(int errorCode, String msg);
+
+	/**
+	 * 返回成功
+	 */
+	public void onCallbackSuc() {
+	};
+
+	/**
+	 * 返回失败
+	 * 
+	 * @param msg
+	 */
+	public void onCallbackSuc(String msg) {
+	};
+
+	/**
+	 * 登录超时回调
+	 * 
+	 * @param context
+	 * @param errorCode
+	 * @param msg
+	 */
+	public void onSessionTimeOut(Context context, int errorCode, String errorMsg) {
+		Intent intent = new Intent();
+		if (ConfigUtil.isNeedGesturePwd()
+				&& !TextUtils.isEmpty(ConfigUtil.getUserId())
+				&& !TextUtils.isEmpty(ConfigUtil.getPassword())) {
+			intent.setClass(context, GestureLoginActivity.class);
+		} else {
+			intent.setClass(context, LoginActivity.class);
+		}
+		
+		if (context instanceof Activity){
+			startActForResult(context, intent, BaseConstant.REQUEST_CODE_TIMEOUT_LOGIN);
+		}else{
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//改标记不能跟startActivityForResult同时使用，否则无法返回结果
+			context.startActivity(intent);
+		}
+	}
+	
+	public void startActForResult(Context context, Intent intent, int requestCode){
+		((Activity)context).startActivityForResult(intent, requestCode);
+	}
+
+	/**
+	 * 检测错误码
+	 */
+	public void checkErrorCode(Context context, int errorCode, String errorMsg) {
+		// 登录超时
+		if (errorCode == GjfaxExceptionCode.sessionTimeOut.getErrorCode()) {
+			GlobalUtil.setSid(null);
+			onSessionTimeOut(context, errorCode, errorMsg);
+			errorMsg = "";//不弹出toast信息
+		}
+
+		if (errorCode == GjfaxExceptionCode.unknown.getErrorCode() || errorCode <= AsyncHttpExceptionCode.defaultExceptionCode.getErrorCode()){
+			errorMsg = context.getString(R.string.common_network_error);
+		}
+		
+		onCallbackFail(errorCode, errorMsg);
+	}
+}

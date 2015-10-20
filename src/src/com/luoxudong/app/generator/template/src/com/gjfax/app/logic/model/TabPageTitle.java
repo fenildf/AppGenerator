@@ -1,0 +1,47 @@
+/**
+ * Title: TabPageTitle.java
+ * Description:
+ * Copyright: Copyright (c) 2013 luoxudong.com
+ * Company:个人
+ * Author: 罗旭东 (hi@luoxudong.com)
+ * Date: 2014-9-9 下午3:00:37
+ * Version: 1.0
+ */
+package com.gjfax.app.logic.model;
+
+
+/** 
+ * ClassName: TabPageTitle
+ * Description: tab标签的标题
+ * Create by: 罗旭东
+ * Date: 2014-9-9 下午3:00:37
+ */
+public class TabPageTitle {
+	/** 标题名称 */
+	private String mTitleName = null;
+	
+	/** 图标 */
+	private int mIconResId = 0;
+	
+	/** 标识 */
+	private int mFlag = 0;
+	
+	public String getTitleName() {
+		return mTitleName;
+	}
+	public void setTitleName(String titleName) {
+		this.mTitleName = titleName;
+	}
+	public int getIconResId() {
+		return mIconResId;
+	}
+	public void setIconResId(int iconResId) {
+		this.mIconResId = iconResId;
+	}
+	public int getFlag() {
+		return mFlag;
+	}
+	public void setFlag(int flag) {
+		this.mFlag = flag;
+	}
+}
