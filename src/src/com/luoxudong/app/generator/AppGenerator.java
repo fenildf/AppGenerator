@@ -287,16 +287,19 @@ public class AppGenerator {
 						newDir.mkdirs();
 						copyRes(file, newDir);
 					}else{
-						if (!"true".equals(mProp.getProperty("ShareSDK")) && file.getName().indexOf("ShareSDK-") == 0) {//不需要分享SDK
+						if (!"true".equals(mProp.getProperty("ShareSDK")) && (file.getName().indexOf("logo_") == 0 || "oks_strings.xml".equals(file.getName()) || "ssdk_strings.xml".equals(file.getName()))) {//不需要分享SDK
 							continue;
-						}else if (!"true".equals(mProp.getProperty("PushSDK")) && (file.getName().indexOf("Getui") == 0 || "libgetuiext.so".equals(file.getName()))) {//不需要推送SDK
-							continue;
-						}else if (!"true".equals(mProp.getProperty("FindLocSDK")) && (file.getName().indexOf("BaiduLBS") == 0 || "liblocSDK5.so".equals(file.getName()))) {//不需要定位SDK
+						}else if (!"true".equals(mProp.getProperty("PushSDK")) && (file.getName().indexOf("getui_") == 0 || "push.png".equals(file.getName()))) {//不需要推送SDK
 							continue;
 						}
 						
 						try {
-							FileUtils.copyFile(file, new File(desDir.getAbsolutePath(), file.getName()));
+							if (file.getName().indexOf(".xml") > 0){
+								stringToFile(new File(desDir.getAbsolutePath(), file.getName()), readTpl(file));
+							}else{
+								FileUtils.copyFile(file, new File(desDir.getAbsolutePath(), file.getName()));
+							}
+							
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
