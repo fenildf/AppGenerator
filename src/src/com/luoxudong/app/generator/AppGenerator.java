@@ -41,14 +41,14 @@ public class AppGenerator {
 	/** 模板文件 */
 	private File mTempFile = null;
 	
-	/** 模板文件名称 */
-	private String mTempFileName = null;
+	/** 模板文件包名 */
+	private String mTempFilePackage = null;
 	
 	/** 生产后的目标文件 */
-	private File mDescFile = null;
+	private File mDestFile = null;
 	
 	/** 生成后的目标文件名称 */
-	private String mDescFileName = null;
+	private String mDestFileName = null;
 	
 	/** app项目包名 */
 	private String mAppPackage = null;
@@ -65,8 +65,7 @@ public class AppGenerator {
 	@SuppressWarnings("unchecked")
 	private void loadProperties() {
 		try {
-			FileInputStream fileInput = new FileInputStream(getFilePath(
-					sConfigPackageName, sFileName));
+			FileInputStream fileInput = new FileInputStream(getFilePath(sConfigPackageName, sFileName));
 			mProp.load(fileInput);
 			mAppPackage = mProp.getProperty("AppPackage");
 			
@@ -79,37 +78,57 @@ public class AppGenerator {
 	
 	private void writeFile() {
 		String outputPath = mProp.getProperty("OutputPath");
+		mTempFilePackage = mProp.getProperty("TemplatePackage");
+		
 		try {
-			mDescFileName = ".classpath";
-			mDescFile = new File(outputPath, mDescFileName);
-			mTempFileName = mProp.getProperty("TemplatePackage");
-			mTempFile = new File(getFilePath(mTempFileName, ".classpath"));
-			stringToFile(mDescFile, readTpl(mTempFile));
+			//先删除目录
+			FileUtils.deleteDirectory(new File(outputPath));
 			
-			mDescFileName = ".project";
-			mDescFile = new File(outputPath, mDescFileName);
-			mTempFileName = mProp.getProperty("TemplatePackage");
-			mTempFile = new File(getFilePath(mTempFileName, ".project"));
-			stringToFile(mDescFile, readTpl(mTempFile));
+			mDestFileName = ".classpath";
+			mDestFile = new File(outputPath, mDestFileName);
+			mTempFile = new File(getFilePath(mTempFilePackage, ".classpath"));
+			stringToFile(mDestFile, readTpl(mTempFile));
 			
-			mDescFileName = "project.properties";
-			mDescFile = new File(outputPath, mDescFileName);
-			mTempFileName = mProp.getProperty("TemplatePackage");
-			mTempFile = new File(getFilePath(mTempFileName, "project.properties"));
-			stringToFile(mDescFile, readTpl(mTempFile));
+			mDestFileName = ".project";
+			mDestFile = new File(outputPath, mDestFileName);
+			mTempFile = new File(getFilePath(mTempFilePackage, ".project"));
+			stringToFile(mDestFile, readTpl(mTempFile));
 			
-			mDescFileName = ".project";
-			mDescFile = new File(outputPath, mDescFileName);
-			mTempFileName = mProp.getProperty("TemplatePackage");
-			mTempFile = new File(getFilePath(mTempFileName, ".project"));
-			stringToFile(mDescFile, readTpl(mTempFile));
+			mDestFileName = "project.properties";
+			mDestFile = new File(outputPath, mDestFileName);
+			mTempFile = new File(getFilePath(mTempFilePackage, "project.properties"));
+			stringToFile(mDestFile, readTpl(mTempFile));
 			
-			mDescFileName = "proguard-project.txt";
-			mDescFile = new File(outputPath, mDescFileName);
-			mTempFileName = mProp.getProperty("TemplatePackage");
-			mTempFile = new File(getFilePath(mTempFileName, "proguard-project.txt"));
-			stringToFile(mDescFile, readTpl(mTempFile));
+			mDestFileName = "AndroidManifest.xml";
+			mDestFile = new File(outputPath, mDestFileName);
+			mTempFile = new File(getFilePath(mTempFilePackage, "AndroidManifest.xml"));
+			stringToFile(mDestFile, readManifestTpl(mTempFile));
 			
+			mDestFileName = "proguard-project.txt";
+			mDestFile = new File(outputPath, mDestFileName);
+			mTempFile = new File(getFilePath(mTempFilePackage, "proguard-project.txt"));
+			stringToFile(mDestFile, readProguardTpl(mTempFile));
+			
+			//复制assets目录
+			mDestFile = new File(outputPath + "/assets");
+			mDestFile.mkdirs();
+			
+			if ("true".equals(mProp.getProperty("ShareSDK"))) {//需要分享SDK
+				File destFile = new File(mDestFile.getAbsolutePath(), "ShareSDK.xml");
+				stringToFile(destFile, readTpl(new File(getFilePath(mTempFilePackage, "/assets/ShareSDK.xml"))));
+			}
+			
+			//复制libs目录
+			mDestFile = new File(outputPath + "/libs");
+			mDestFile.mkdirs();
+			File libsDir = new File(getFilePath(mTempFilePackage, "libs"));
+			copyLibs(libsDir, mDestFile);
+			
+			//复制res目录
+			mDestFile = new File(outputPath + "/res");
+			mDestFile.mkdirs();
+			File resDir = new File(getFilePath(mTempFilePackage, "res"));
+			copyRes(resDir, mDestFile);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -128,11 +147,163 @@ public class AppGenerator {
 		} catch (IOException e) {
 		}
 		return content;
-
 	}
 	
-	private static void stringToFile(File file, String s) throws IOException {
+	/**
+	 * 生成代码混淆代码
+	 * @param tpl
+	 * @return
+	 */
+	private String readProguardTpl(File tpl) {
+		String content = readTpl(tpl);
+		
+		//加载系统库
+		File libsDir = new File(getFilePath(mTempFilePackage, "libs"));
+		File[] libsFile = libsDir.listFiles();
+		StringBuilder libBuilder = new StringBuilder();
+		if (libsDir != null){
+			if (libsFile != null){
+				for (File lib : libsFile){
+					if (lib.isFile()){
+						if (!"true".equals(mProp.getProperty("ShareSDK")) && lib.getName().indexOf("ShareSDK-") == 0) {//不需要分享SDK
+							continue;
+						}
+						
+						if (!"true".equals(mProp.getProperty("PushSDK")) && lib.getName().indexOf("Getui") == 0) {//不需要推送SDK
+							continue;
+						}
+						
+						if (!"true".equals(mProp.getProperty("FindLocSDK")) && lib.getName().indexOf("BaiduLBS") == 0) {//不需要定位SDK
+							continue;
+						}
+						
+						libBuilder.append("-libraryjars libs/" + lib.getName()).append("\n");
+					}
+				}
+			}
+			
+			content = content.replaceAll("\\#\\{Libraryjars\\}", libBuilder.toString());
+		}
+		
+		StringBuilder keepClassBuilder = new StringBuilder();
+		if ("true".equals(mProp.getProperty("ShareSDK"))) {//需要分享SDK
+			keepClassBuilder.append("-keep class cn.sharesdk.** { *; }").append("\n");
+		}
+		
+		if ("true".equals(mProp.getProperty("PushSDK"))) {//需要推送SDK
+			keepClassBuilder.append("-keep class com.igexin.** { *; }").append("\n");
+		}
+		
+		if ("true".equals(mProp.getProperty("FindLocSDK"))) {//需要定位SDK
+			keepClassBuilder.append("-keep class com.baidu.** { *; }").append("\n");
+		}
+		
+		content = content.replaceAll("\\#\\{KeepClass\\}", keepClassBuilder.toString());
+		
+		return content;
+	}
+	
+	/**
+	 * 生成manifest代码
+	 * @param tpl
+	 * @return
+	 */
+	private String readManifestTpl(File tpl) {
+		String content = readTpl(tpl);
+		
+		StringBuilder userPermissionBuilder = new StringBuilder();
+		String shareContent = "";
+		String getuiContent = "";
+		String findLocContent = "";
+		
+		if ("true".equals(mProp.getProperty("ShareSDK"))) {//需要分享SDK
+			File shareTempFile = new File(getFilePath(mTempFilePackage, "sharesdk-config.txt"));
+			shareContent = readTpl(shareTempFile);
+		}
+		
+		if ("true".equals(mProp.getProperty("PushSDK"))) {//需要推送SDK
+			userPermissionBuilder.append("    <uses-permission android:name=\"android.permission.SYSTEM_ALERT_WINDOW\" />").append("\n")
+			.append("    <uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\" />").append("\n");
+			
+			File getuiTempFile = new File(getFilePath(mTempFilePackage, "getuisdk-config.txt"));
+			getuiContent = readTpl(getuiTempFile);
+		}
+		
+		if ("true".equals(mProp.getProperty("FindLocSDK"))) {//需要定位SDK
+			userPermissionBuilder.append("    <uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />").append("\n")
+			.append("    <uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />").append("\n");
+			
+			findLocContent = "<meta-data android:name=\"com.baidu.lbsapi.API_KEY\" android:value=\"\" /> <!-- 百度定位 -->";
+		}
+		
+		content = content.replaceAll("\\#\\{ShareSDKConfig\\}", shareContent);
+		content = content.replaceAll("\\#\\{GeTuiSDKConfig\\}", getuiContent);
+		content = content.replaceAll("\\#\\{Baidulbsapi\\}", findLocContent);
+		content = content.replaceAll("\\#\\{UserPermission\\}", userPermissionBuilder.toString());
+		
+		return content;
+	}
+	
+	private void stringToFile(File file, String s) throws IOException {
 		FileUtils.writeStringToFile(file, s, ENCODING);
+	}
+	
+	private void copyLibs(File srcDir, File desDir){
+		if (srcDir != null){
+			File[] files = srcDir.listFiles();
+			if (files != null){
+				for (File file : files){
+					if (file.isDirectory()){
+						File newDir = new File(desDir, file.getName());
+						newDir.mkdirs();
+						copyLibs(file, newDir);
+					}else{
+						if (!"true".equals(mProp.getProperty("ShareSDK")) && file.getName().indexOf("ShareSDK-") == 0) {//不需要分享SDK
+							continue;
+						}else if (!"true".equals(mProp.getProperty("PushSDK")) && (file.getName().indexOf("Getui") == 0 || "libgetuiext.so".equals(file.getName()))) {//不需要推送SDK
+							continue;
+						}else if (!"true".equals(mProp.getProperty("FindLocSDK")) && (file.getName().indexOf("BaiduLBS") == 0 || "liblocSDK5.so".equals(file.getName()))) {//不需要定位SDK
+							continue;
+						}
+						
+						try {
+							FileUtils.copyFile(file, new File(desDir.getAbsolutePath(), file.getName()));
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	private void copyRes(File srcDir, File desDir){
+		if (srcDir != null){
+			File[] files = srcDir.listFiles();
+			if (files != null){
+				for (File file : files){
+					if (file.isDirectory()){
+						File newDir = new File(desDir, file.getName());
+						newDir.mkdirs();
+						copyRes(file, newDir);
+					}else{
+						if (!"true".equals(mProp.getProperty("ShareSDK")) && file.getName().indexOf("ShareSDK-") == 0) {//不需要分享SDK
+							continue;
+						}else if (!"true".equals(mProp.getProperty("PushSDK")) && (file.getName().indexOf("Getui") == 0 || "libgetuiext.so".equals(file.getName()))) {//不需要推送SDK
+							continue;
+						}else if (!"true".equals(mProp.getProperty("FindLocSDK")) && (file.getName().indexOf("BaiduLBS") == 0 || "liblocSDK5.so".equals(file.getName()))) {//不需要定位SDK
+							continue;
+						}
+						
+						try {
+							FileUtils.copyFile(file, new File(desDir.getAbsolutePath(), file.getName()));
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	private String getFilePath(String packageName, String name) {
