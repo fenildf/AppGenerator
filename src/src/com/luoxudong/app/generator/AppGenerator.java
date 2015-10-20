@@ -129,6 +129,13 @@ public class AppGenerator {
 			mDestFile.mkdirs();
 			File resDir = new File(getFilePath(mTempFilePackage, "res"));
 			copyRes(resDir, mDestFile);
+			
+			//复制源码目录
+			mDestFile = new File(outputPath + "/src");
+			mDestFile.mkdirs();
+			File srcDir = new File(getFilePath(mTempFilePackage, "src"));
+			copySrc(srcDir, mDestFile);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -303,6 +310,34 @@ public class AppGenerator {
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
+					}
+				}
+			}
+		}
+	}
+	
+	private void copySrc(File srcDir, File desDir){
+		if (srcDir != null){
+			File[] files = srcDir.listFiles();
+			if (files != null){
+				for (File file : files){
+					if (file.isDirectory()){
+						File newDir = new File(desDir, file.getName());
+						newDir.mkdirs();
+						copyRes(file, newDir);
+					}else{
+						if (!"true".equals(mProp.getProperty("ShareSDK")) && (file.getName().indexOf("logo_") == 0 || "oks_strings.xml".equals(file.getName()) || "ssdk_strings.xml".equals(file.getName()))) {//不需要分享SDK
+							continue;
+						}else if (!"true".equals(mProp.getProperty("PushSDK")) && (file.getName().indexOf("getui_") == 0 || "push.png".equals(file.getName()))) {//不需要推送SDK
+							continue;
+						}
+						
+						try {
+							stringToFile(new File(desDir.getAbsolutePath(), file.getName()), readTpl(file));
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						
 					}
 				}
 			}
