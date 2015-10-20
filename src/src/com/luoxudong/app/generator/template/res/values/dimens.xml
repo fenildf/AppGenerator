@@ -1,0 +1,19 @@
+<resources>
+    <dimen name="common_text_size">15sp</dimen><!-- 全局文字大小 -->
+    <dimen name="common_title_h">43dp</dimen><!-- 标题栏高度 -->
+    <dimen name="common_title_margin_l">10dp</dimen><!-- 标题栏左边边距 -->
+    <dimen name="common_title_margin_r">10dp</dimen><!-- 标题栏右边边距 -->
+    <dimen name="common_title_text_size">18sp</dimen><!-- 标题文字大小 -->
+    <dimen name="common_title_max_w">200.0dip</dimen><!-- 标题最大宽度 -->
+    <dimen name="common_title_icon_w">45dp</dimen><!-- 标题栏图标大小 -->
+    <dimen name="common_edit_padding_l">3dp</dimen><!-- 编辑框左边边距 -->
+    <dimen name="common_margin_t">15dp</dimen><!-- 全局上方边距 -->
+    <dimen name="common_toast_text_size">8dp</dimen><!-- Toast提示信息文字大小 -->
+    <dimen name="common_toast_padding_l">10dp</dimen><!-- Toast左边边距 -->
+    <dimen name="common_toast_padding_t">5dp</dimen><!-- Toast上班边距 -->
+    <dimen name="common_toast_height">20dp</dimen><!-- Toast高度 -->
+    <dimen name="common_btn_padding_l">30dp</dimen><!-- 按钮左边边距 -->
+    <dimen name="common_block_layout_margin">4dp</dimen>
+    <dimen name="common_dialog_padding">15dp</dimen>
+    <dimen name="common_btn_top_margin">45dp</dimen><!-- 按钮左边边距 -->
+</resources>

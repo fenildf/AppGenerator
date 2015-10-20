@@ -1,0 +1,122 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <style name="#{ProjectPrefix}" />
+    <style name="#{ProjectPrefix}.Widget" />
+    
+    <!-- 普通样式 -->
+    <style name="#{ProjectPrefix}.Theme" parent="@android:style/Theme.Holo.Light">
+        <item name="android:windowBackground">@color/common_background</item>
+        <item name="android:colorBackground">@color/common_background</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:textSize">@dimen/common_text_size</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/common_text_normal</item>
+        <item name="android:windowTitleSize">@dimen/common_title_h</item>
+        <item name="android:windowTitleStyle">@style/#{ProjectPrefix}.WindowTitle</item>
+        <item name="android:windowTitleBackgroundStyle">@style/#{ProjectPrefix}.WindowTitleBackground</item>
+        <item name="android:windowAnimationStyle">@style/#{ProjectPrefix}.Theme.globalAnimation</item>
+    </style>
+    
+    <!-- 无标题样式 -->
+    <style name="#{ProjectPrefix}.Theme.NoTitleBar" parent="@style/#{ProjectPrefix}.Theme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+    </style>
+    
+    <style name="#{ProjectPrefix}.Theme.NoTitleBar.DialogAct" parent="@style/#{ProjectPrefix}.Theme.NoTitleBar.Transparent">
+        <item name="android:windowAnimationStyle">@style/#{ProjectPrefix}.Theme.normalAnimation</item>
+    </style>
+
+    <!-- 无标题状态栏样式 -->
+    <style name="#{ProjectPrefix}.Theme.NoTitleBar.Fullscreen" parent="@style/#{ProjectPrefix}.Theme.NoTitleBar">
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+    
+    <style name="#{ProjectPrefix}.TextAppearance.Normal" parent="@android:style/TextAppearance">
+        <item name="android:textSize">@dimen/common_text_size</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/common_text_normal</item>
+    </style>
+    
+    <style name="#{ProjectPrefix}.WindowTitle">
+        <item name="android:textColor">@color/common_title_text</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:paddingLeft">@dimen/common_title_margin_l</item>
+        <item name="android:paddingRight">@dimen/common_title_margin_r</item>
+        <item name="android:maxWidth">@dimen/common_title_max_w</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:shadowColor">@color/common_text_normal</item>
+        <item name="android:layout_weight">1.0</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:marqueeRepeatLimit">0</item>
+    </style>
+    
+    <style name="#{ProjectPrefix}.WindowTitleBackground">
+        <item name="android:background">@color/common_title_background</item>
+    </style>
+    
+    <style name="#{ProjectPrefix}.Theme.NoTitleBar.Transparent" parent="@style/#{ProjectPrefix}.Theme.NoTitleBar">
+        <item name="android:windowBackground">@color/common_gray_transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+    
+    <style name="#{ProjectPrefix}.Theme.globalAnimation">
+        <item name="android:activityOpenEnterAnimation">@anim/push_left_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/push_left_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/push_right_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/push_right_out</item>
+    </style>
+    
+    <style name="#{ProjectPrefix}.Theme.normalAnimation">
+        <item name="android:activityOpenEnterAnimation">@anim/fade_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/fade_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/fade_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/fade_out</item>
+    </style>
+    
+    
+    <!-- 底部选项卡样式 -->
+    <style name="tabbarRadioGroup">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:background">@drawable/main_tabbar_bg</item>
+    </style>
+    
+    <!-- 选项卡标签样式 -->
+    <style name="tabbarRadioButton">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/main_tabbar_text</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">0px</item>
+        <item name="android:button">@null</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/main_tabbar_text</item>
+        <item name="android:padding">@dimen/main_tabbar_padding</item>
+        <item name="android:gravity">center</item>
+        <item name="android:scaleType">matrix</item>
+    </style>
+    
+    <style name="CommonDialog" parent="@android:Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:padding">@dimen/common_dialog_padding</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+    
+    <style name="LoadingDialog" parent="@android:Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowFullscreen">true</item> 
+    </style>
+    
+</resources>

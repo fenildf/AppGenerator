@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageButton
+        android:id="@+id/ibtn_title_back_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:background="@android:color/transparent"
+        android:onClick="onClick"
+        android:paddingLeft="@dimen/common_title_back_padding"
+        android:paddingRight="@dimen/common_title_back_padding"
+        android:src="@drawable/btn_title_back" />
+
+    <Button
+        android:id="@+id/btn_title_right_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/common_title_margin_r"
+        android:background="@android:color/transparent"
+        android:onClick="onClick"
+        android:textColor="@color/btn_title_text"
+        android:textSize="@dimen/common_title_right_text" />
+
+</RelativeLayout>

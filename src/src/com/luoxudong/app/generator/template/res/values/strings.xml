@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    <string name="app_name">#{AppName}</string>
+    <string name="common_network_error">连接网络异常，请稍后重试!</string>
+    <string name="common_no_network">无网络</string>
+    <string name="common_click_exit">再按一次退出#{AppName}</string>
+</resources>
