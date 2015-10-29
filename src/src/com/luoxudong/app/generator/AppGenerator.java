@@ -325,7 +325,7 @@ public class AppGenerator {
 				for (File file : files){
 					if (file.isDirectory()){
 						File newDir = new File(desDir, file.getName());
-						newDir.mkdirs();
+						//newDir.mkdirs();
 						copySrc(file, newDir);
 					}else{
 						if (!file.getName().endsWith(".txt")){
@@ -348,8 +348,15 @@ public class AppGenerator {
 							fileName = fileName.replaceAll("\\#\\{" + key + "\\}", value);
 						}
 						
+						String dir = desDir.getAbsolutePath();
+						String packPath = mProp.getProperty("AppPackage").replaceAll("\\.", "\\\\");
+						
+						if (dir.contains("com\\luoxudong\\app")){
+							dir = dir.replace("com\\luoxudong\\app", packPath);
+						}
+						
 						try {
-							stringToFile(new File(desDir.getAbsolutePath(), fileName), readTpl(file));
+							stringToFile(new File(dir, fileName), readTpl(file));
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
