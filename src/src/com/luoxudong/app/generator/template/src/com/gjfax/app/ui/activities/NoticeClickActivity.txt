@@ -1,0 +1,151 @@
+/**
+ * Title: NoticeClickActivity.java
+ * Description: 
+ * Copyright: Copyright (c) 2013-2015 luoxudong.com
+ * Company: 个人
+ * Author: 罗旭东 (hi@luoxudong.com)
+ * Date: 2015年8月30日 下午5:57:51
+ * Version: 1.0
+ */
+package #{AppPackage}.ui.activities;
+
+import java.util.List;
+
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningAppProcessInfo;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+
+import #{AppPackage}.R;
+import #{AppPackage}.logic.push.vo.Notice;
+import com.luoxudong.app.utils.LogUtil;
+import com.luoxudong.app.utils.MD5;
+
+/** 
+ * <pre>
+ * ClassName: NoticeClickActivity
+ * Description:TODO(这里用一句话描述这个类的作用)
+ * Create by: 罗旭东
+ * Date: 2015年8月30日 下午5:57:51
+ * </pre>
+ */
+public class NoticeClickActivity extends BaseActivity {
+	public static final String EXTRA_NOTICE = "notice";
+	
+	/** 普通通知 */
+	private final static int NOTICE_TYPE_NORMAL = 0;
+
+	/** APP推广 */
+	private final static int NOTICE_TYPE_APP_SPREAD = 1;
+
+	@Override
+	protected int getContentViewLayoutResId() {
+		return R.layout.activity_notice;
+	}
+
+	@Override
+	protected void onCreateFindView(Bundle savedInstanceState) {
+
+	}
+
+	@Override
+	protected void onCreateAddListener(Bundle savedInstanceState) {
+
+	}
+
+	@Override
+	protected void onCreateInitData(Bundle savedInstanceState) {
+		initBackBtnActionBar();
+		setWindowTitle(getResources().getString(R.string.title_notice));
+
+		Notice notice = (Notice) getIntent().getSerializableExtra(EXTRA_NOTICE);
+
+		if (notice != null) {
+			switch (notice.getNoticeType()) {
+			case NOTICE_TYPE_NORMAL:
+				normalNotice(notice);
+				break;
+			case NOTICE_TYPE_APP_SPREAD:
+				spread(notice);
+				break;
+			
+			default:
+				break;
+			}
+		}
+
+		finish();
+	}
+
+	@Override
+	protected void onCreateTaskLoadData() {
+
+	}
+
+	@Override
+	protected void onCreateTaskAddView() {
+
+	}
+
+	@Override
+	protected void refreshUI(Object obj) {
+
+	}
+
+	/**
+	 * 普通消息
+	 */
+	private void normalNotice(Notice notice) {
+		if (!TextUtils.isEmpty(notice.getRedirectUrl())) {// 普通通知
+			Intent intent = new Intent();
+			intent.setAction("android.intent.action.VIEW");
+			Uri content_url = Uri.parse(notice.getRedirectUrl());
+			intent.setData(content_url);
+			startActivity(intent);
+		}else {
+			//if (!isRunning(NoticeClickActivity.this, "#{AppPackage}")) {
+				Intent intent = new Intent();   
+			    intent.setClass(NoticeClickActivity.this, SplashActivity.class);
+			    startActivity(intent);  
+			//}
+		}
+	}
+	
+	/**
+	 * 判断应用是否正在运行
+	 * 
+	 * @param context
+	 * @param packageName
+	 * @return
+	 */ 
+	private boolean isRunning(Context context, String packageName) { 
+	    ActivityManager am = (ActivityManager) context 
+	            .getSystemService(Context.ACTIVITY_SERVICE); 
+	    List<RunningAppProcessInfo> list = am.getRunningAppProcesses(); 
+	    for (RunningAppProcessInfo appProcess : list) { 
+	        String processName = appProcess.processName; 
+	        LogUtil.d(this.toString(),"======processName = "+ processName);
+	        if (processName != null && processName.equals(packageName)) { 
+	            return true; 
+	        } 
+	    } 
+	    return false; 
+	}
+
+	/**
+	 * app推广
+	 * 
+	 * @param notice
+	 */
+	private void spread(Notice notice) {
+		if (!TextUtils.isEmpty(notice.getRedirectUrl())) {// 推广
+			String fileName = MD5.hexdigest(notice.getRedirectUrl());
+
+		}
+	}
+
+}

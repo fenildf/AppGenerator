@@ -2,19 +2,19 @@
         <!-- 配置的第三方参数属性 -->
         <meta-data
             android:name="PUSH_APPID"
-            android:value="" /> <!-- APPID -->
+            android:value="#{GeTuiAppId}" /> <!-- APPID -->
         <meta-data
             android:name="PUSH_APPKEY"
-            android:value="" /> <!-- APPKEY -->
+            android:value="#{GeTuiAppKey}" /> <!-- APPKEY -->
         <meta-data
             android:name="PUSH_APPSECRET"
-            android:value="" /> <!-- APPSECRET -->
+            android:value="#{GeTuiAppSecret}" /> <!-- APPSECRET -->
         <!-- 配置第三方Receiver -->
         <receiver
             android:name="#{AppPackage}.ui.receiver.PushMsgReceiver"
             android:exported="false" >
             <intent-filter>
-                <action android:name="com.igexin.sdk.action.hf5FPnENB5ADGptar2HBN4" />
+                <action android:name="com.igexin.sdk.action.#{GeTuiAppId}" />
             </intent-filter>
         </receiver>
         <!-- 配置SDK核心服务 -->
@@ -71,7 +71,7 @@
 
         <provider
             android:name="com.igexin.download.DownloadProvider"
-            android:authorities="downloads.com.gjfax.app"
+            android:authorities="downloads.#{AppPackage}"
             android:exported="true"
             android:process=":pushservice" />
 
@@ -89,7 +89,7 @@
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4" />
-                <action android:name="com.igexin.sdk.action.hf5FPnENB5ADGptar2HBN4" />
+                <action android:name="com.igexin.sdk.action.#{GeTuiAppId}" />
             </intent-filter>
         </receiver>
 

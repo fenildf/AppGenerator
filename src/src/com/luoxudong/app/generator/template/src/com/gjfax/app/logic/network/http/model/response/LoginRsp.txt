@@ -1,0 +1,18 @@
+package #{AppPackage}.logic.network.http.model.response;
+
+
+
+public class LoginRsp extends BaseRsp<LoginRsp> {
+	private static final long serialVersionUID = 1L;
+	
+	/** 会话标识 */
+	private String sid = null;
+	
+    public String getSid() {
+		return sid;
+	}
+
+	public void setSid(String sid) {
+		this.sid = sid;
+	}
+}

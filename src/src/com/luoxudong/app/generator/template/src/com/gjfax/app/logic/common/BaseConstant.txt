@@ -1,0 +1,71 @@
+/**
+ * Title: BaseConstant.java
+ * Description:
+ * Copyright: Copyright (c) 2013 luoxudong.com
+ * Company:个人
+ * Author 罗旭东 (hi@luoxudong.com)
+ * Date 2014-8-27 上午11:27:27
+ * Version 1.0
+ */
+package #{AppPackage}.logic.common;
+
+import android.os.Environment;
+
+/** 
+ * ClassName: BaseConstant
+ * Description:常量
+ * Create by 罗旭东
+ * Date 2014-8-27 上午11:27:27
+ */
+public class BaseConstant {
+	public static final String CORPORATION_DIR = Environment.getExternalStorageDirectory().getAbsolutePath() + "/gjfax/";
+	
+	/** 自定义主目录名称 */
+	public static final String ROOT_DIR_NAME = "app";
+	
+	/** 应用主目录 */
+	public static final String APP_ROOT_DIR = CORPORATION_DIR + ROOT_DIR_NAME + "/";
+	
+	/** 默认用户 */
+	public static final String DEFAULT_USER = "default";
+	
+	/** 系统配置文件名 */
+	public static final String SYSTEM_CONFIG_FILE_NAME = "system_config.json";
+	
+	/** 用户配置文件名 */
+	public static final String USER_CONFIG_FILE_NAME = "user_config.json";
+	
+	/** 当前用户名，对应文件名称，切换用户是需要修改指向对应目录 */
+	public static String CURRENT_USER = DEFAULT_USER;
+	
+	/** 系统升级文件存放目录 */
+	public static final String UPGRADE_DIR = APP_ROOT_DIR + "upgrade/";
+	
+	/** 当前用户主目录 */
+	public static String CURRENT_USER_HOME_DIR = APP_ROOT_DIR + CURRENT_USER + "/";
+	
+	/** 用户缓存目录 */
+	public static String USER_CACHE = CURRENT_USER_HOME_DIR + "cache/";
+	
+	/** 缓存图片 */
+	public static String USER_CACHE_IMAGE = USER_CACHE + "img/";
+	
+	/** 用户配置信息 */
+	public static String USER_CONFIG_DIR = CURRENT_USER_HOME_DIR + "config/";
+	
+	/** 数据库目录 */
+	public static String DATABASE_DIR = CURRENT_USER_HOME_DIR + "db/";
+	
+	/** 数据库名称 */
+	public static String DATABASE_NAME = "database.db";
+	
+	/** 数据库路径 */
+	public static String DATABASE_PATH = DATABASE_DIR + DATABASE_NAME;
+	
+	/** 按返回键退出时间间隔(秒) */
+	public static final float EXIT_APP_CLICK_TIME_INTERVAL = 2;
+	
+	
+	/** 用户信息 */
+	public static final String INTENT_EXTRA_USER_INFO = "userInfo";
+}

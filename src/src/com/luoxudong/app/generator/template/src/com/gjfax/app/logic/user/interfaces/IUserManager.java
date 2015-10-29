@@ -7,11 +7,11 @@
  * Date: 2014-9-15 上午9:51:52
  * Version: 1.0
  */
-package com.gjfax.app.logic.user.interfaces;
+package #{AppPackage}.logic.user.interfaces;
 
 import android.content.Context;
 
-import com.gjfax.app.logic.user.manager.UserCallable;
+import #{AppPackage}.logic.user.manager.UserCallable;
 
 /** 
  * ClassName: IUserManager

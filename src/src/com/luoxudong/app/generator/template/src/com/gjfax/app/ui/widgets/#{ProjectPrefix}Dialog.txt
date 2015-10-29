@@ -1,0 +1,217 @@
+/**
+ * Title: #{ProjectPrefix}Dialog.java
+ * Description: 
+ * Copyright: Copyright (c) 2013-2015 luoxudong.com
+ * Company: 个人
+ * Author: 罗旭东 (hi@luoxudong.com)
+ * Date: 2015年8月19日 下午5:34:32
+ * Version: 1.0
+ */
+package #{AppPackage}.ui.widgets;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.text.Spanned;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import #{AppPackage}.R;
+
+/** 
+ * <pre>
+ * ClassName: #{ProjectPrefix}Dialog
+ * Description:通用dialog
+ * Create by: 罗旭东
+ * Date: 2015年8月19日 下午5:34:32
+ * </pre>
+ */
+public class #{ProjectPrefix}Dialog extends Dialog {
+	public #{ProjectPrefix}Dialog(Context context) {
+		super(context);
+	}
+
+	public #{ProjectPrefix}Dialog(Context context, int theme) {
+		super(context, theme);
+	}
+
+	protected #{ProjectPrefix}Dialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
+		super(context, cancelable, cancelListener);
+	}
+
+	/**
+	 * @ClassName: Builder
+	 * @Description: Builder类
+	 * @author 罗旭东
+	 * @date 2012-9-11 下午8:13:21
+	 */
+	public static class Builder {
+		/** 对话框view */
+		private View layout = null;
+		
+		/** 上下文 */
+		private Context context = null;
+
+		/** 标题 */
+		private String title = null;
+		
+		/** 消息 */
+		private String message = null;
+		
+		private Spanned messageSpanned = null;
+		
+		/** 按钮文字 */
+		private String btnText = null;
+
+		/**自定义控件 */
+		private View view = null;
+		
+		/** 是否按返回键可以取消 */
+		private boolean cancelable = true;
+
+		/** 点击确认键自动关闭 */
+		private boolean dismiss = true;
+		
+		/** 点击区域外面是否可取消 */
+		private boolean isCanceledOnTouchOutside = false;
+
+		/** 确认监听器 */
+		private OnClickListener positiveBtnClickListener = null;
+
+		/** 取消监听器 */
+		private OnClickListener negativeBtnClickListener = null;
+
+		public Builder(Context context) {
+			this.context = context;
+		}
+
+		public Builder setTitle(String title) {
+			this.title = title;
+			return this;
+		}
+		
+		public Builder setMessage(String message) {
+			this.message = message;
+			return this;
+		}
+		
+		public Builder setMessageSpanned(Spanned messageSpanned) {
+			this.messageSpanned = messageSpanned;
+			return this;
+		}
+		
+		public Builder setBtnText(String btnText) {
+			this.btnText = btnText;
+			return this;
+		}
+		
+		public Builder setDismiss(boolean dismiss) {
+			this.dismiss = dismiss;
+			return this;
+		}
+		
+		public Builder setView(View view) {
+			this.view = view;
+			return this;
+		}
+		
+		public Builder setCancelable(boolean cancelable) {
+			this.cancelable = cancelable;
+			return this;
+		}
+
+		public Builder setCanceledOnTouchOutside(boolean isCanceledOnTouchOutside) {
+			this.isCanceledOnTouchOutside = isCanceledOnTouchOutside;
+			return this;
+		}
+
+		/**
+		 * 设置确认按钮信息
+		 */
+		public Builder setPositiveButton(OnClickListener listener) {
+			this.positiveBtnClickListener = listener;
+			return this;
+		}
+
+		/**
+		 * 设置取消按钮信息
+		 */
+		public Builder setNegativeButton(OnClickListener listener) {
+			this.negativeBtnClickListener = listener;
+			return this;
+		}
+
+		/**
+		 * 创建视图
+		 */
+		public #{ProjectPrefix}Dialog create() {
+			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			final #{ProjectPrefix}Dialog dialog = new #{ProjectPrefix}Dialog(context, R.style.CommonDialog);
+			layout = inflater.inflate(R.layout.layout_common_dialog, null);
+			dialog.addContentView(layout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+
+			//设置标题
+			if (title != null){
+				((TextView) layout.findViewById(R.id.tv_common_dialog_title)).setText(title);
+			}
+			
+			// 内容
+			if (message != null) {
+				((TextView) layout.findViewById(R.id.tv_dialog_content)).setText(message);
+			}else if (messageSpanned != null){
+				((TextView) layout.findViewById(R.id.tv_dialog_content)).setText(messageSpanned);
+			}
+
+			//自定义控件
+			if (view != null){
+				LinearLayout contentLayout = (LinearLayout)layout.findViewById(R.id.ll_common_dialog_content);
+				contentLayout.removeAllViews();
+				contentLayout.addView(view);
+			}
+			
+			Button positiveBtn = (Button) layout.findViewById(R.id.btn_common_dialog_confirm);
+
+			if (btnText != null){
+				positiveBtn.setText(btnText);
+			}
+			
+			positiveBtn.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					if (positiveBtnClickListener != null) {
+						positiveBtnClickListener.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+					}
+
+					if (dismiss){
+						dialog.dismiss();
+					}
+				}
+			});
+			
+			ImageView negativeBtn = (ImageView) layout.findViewById(R.id.iv_common_dialog_close);
+
+			negativeBtn.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					if (negativeBtnClickListener != null) {
+						negativeBtnClickListener.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
+					}
+					dialog.dismiss();
+				}
+			});
+
+			dialog.setCancelable(cancelable);
+			dialog.setCanceledOnTouchOutside(isCanceledOnTouchOutside);
+
+			dialog.setContentView(layout);
+			return dialog;
+		}
+	}
+}

@@ -1,0 +1,44 @@
+/**
+ * Title: UpgradeManager.java
+ * Description: 
+ * Copyright: Copyright (c) 2013 luoxudong.com
+ * Company: 深圳市彩讯科技有限公司
+ * Author: 罗旭东
+ * Date: 2015年4月8日 上午9:31:02
+ * Version: 1.0
+ */
+package #{AppPackage}.logic.upgrade.manager;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import android.content.Context;
+import android.text.TextUtils;
+
+import #{AppPackage}.logic.network.NetworkApiUtil;
+import #{AppPackage}.logic.upgrade.interfaces.IUpgradeManager;
+import #{AppPackage}.logic.utils.ConfigUtil;
+import com.luoxudong.app.asynchttp.AsyncHttpUtil;
+import com.luoxudong.app.asynchttp.callable.SimpleRequestCallable;
+import com.luoxudong.app.utils.PackageUtil;
+
+/** 
+ * ClassName: UpgradeManager
+ * Description:TODO(这里用一句话描述这个类的作用)
+ * Create by: 
+ * Date: 2015年4月8日 上午9:31:02
+ */
+public class UpgradeManager implements IUpgradeManager {
+
+	@Override
+	public void upgradeCheck(final Context context, final UpgradeCallable callable) {
+		
+	}
+
+	@Override
+	public void initUpgradeData(Context context) {
+		
+	}
+
+}

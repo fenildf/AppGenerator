@@ -1,0 +1,310 @@
+/**
+ * Title: CommonUtils.java
+ * Description: 
+ * Copyright: Copyright (c) 2013-2015 luoxudong.com
+ * Company: 个人
+ * Author: 罗旭东 (hi@luoxudong.com)
+ * Date: 2015年8月4日 下午3:52:58
+ * Version: 1.0
+ */
+package #{AppPackage}.ui.codestyle.simples;
+
+import java.io.File;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Date;
+
+import android.R;
+import android.net.ConnectivityManager;
+import android.view.View;
+import android.widget.AdapterView;
+
+import #{AppPackage}.logic.common.BaseApplication;
+import com.luoxudong.app.utils.BytesUtil;
+import com.luoxudong.app.utils.DateUtil;
+import com.luoxudong.app.utils.FileUtil;
+import com.luoxudong.app.utils.LogUtil;
+import com.luoxudong.app.utils.MD5;
+import com.luoxudong.app.utils.NetworkUtil;
+import com.luoxudong.app.utils.PackageUtil;
+import com.luoxudong.app.utils.Utility;
+import com.luoxudong.app.utils.click.OnClickAvoidForceListener;
+import com.luoxudong.app.utils.click.OnItemClickAvoidForceListener;
+
+/** 
+ * <pre>
+ * ClassName: CommonUtils
+ * Description:TODO(这里用一句话描述这个类的作用)
+ * Create by: 罗旭东
+ * Date: 2015年8月4日 下午3:52:58
+ * </pre>
+ */
+public class CommonUtils {
+	private static final String TAG = CommonUtils.class.getSimpleName();
+	
+	/** 按钮防暴力点击事件 */
+	private OnClickAvoidForceListener mOnClickListener = new OnClickAvoidForceListener() {
+		
+		@Override
+		public void onClickAvoidForce(View v) {
+			
+		}
+	};
+	
+	/** ListView,GridView等item的防爆力点击事件 */
+	private OnItemClickAvoidForceListener mOnItemClickListener = new OnItemClickAvoidForceListener() {
+		
+		@Override
+		public void onItemClickAvoidForce(AdapterView<?> parent, View view, int position, long id) {
+			
+		}
+	};
+	
+	public void main() {
+		//////////////////////////////防爆力点击事件
+		
+		//设置两次点击事件间隔，默认为0.5秒
+		mOnClickListener.setLockTime(1000);
+		mOnItemClickListener.setLockTime(1000);
+		
+		//////////////////////////////字节操作
+		
+		//字节数组转int类型
+		BytesUtil.bytes2DWord(new byte[]{0x01,0x02,0x03,0x04});
+		
+		//字节数组转int类型，带偏移量
+		BytesUtil.bytes2DWord(new byte[]{0x01,0x02,0x03,0x04,0x05}, 1);
+		
+		//字节数组转字符串
+		BytesUtil.bytes2Str(new byte[]{0x01,0x02,0x03,0x04,0x05}, "UTF-8");
+		
+		//字节数组转char类型
+		BytesUtil.bytes2Word(new byte[]{0x01,0x02});
+		
+		//字节数组转16进制
+		BytesUtil.bytesToHexStr(new byte[]{63,64,65,66,67});
+		
+		//int转字节数组
+		BytesUtil.dword2Bytes(100);
+		
+		//字符串转字节数组
+		BytesUtil.str2Bytes("test", "UTF-8");
+		
+		//char转字节数组
+		BytesUtil.word2Bytes('a');
+		
+		
+		//////////////////////////////日期工具类
+		
+		//获取当前时间并且以yyyy-MM-dd HH:mm:ss格式返回
+		DateUtil.getSystemDateTimeString();
+		
+		//把指定日期类型的时间转换成yyyy-MM-dd HH:mm:ss格式字符串
+		DateUtil.getDateString(new Date());
+		
+		//把指定日期类型的时间转换成指定的字符串格式
+		DateUtil.getDateToString(new Date(), DateUtil.DATE_FORMAT_1);
+		
+		//字符串类型时间转指定格式的date类型时间
+		DateUtil.getDateByParse("2015-08-04 16:36:01", DateUtil.DATE_FORMAT_DEFAULT);
+		
+		//获取当天是本周第几天
+		DateUtil.getDayOfWeek();
+		
+		//两个日期之间的天数
+		DateUtil.getTimeDiffDays(new Date(), DateUtil.getDateByParse("2015-08-04 16:36:01", DateUtil.DATE_FORMAT_DEFAULT));
+		
+		//离指定日期前后几天的日期，如：10天后的日期
+		DateUtil.getRelativeDate(new Date(), 10);
+		
+		//更多...
+		
+		//////////////////////////////文件操作
+		
+		try {
+			//拷贝文件
+			FileUtil.copyFile(new File(""), new File(""));
+			
+			//删除文件
+			FileUtil.delete("");
+			
+			//判断SD卡是否存在
+			FileUtil.isSDCardAvailable();
+			
+			//获取文件后缀
+			FileUtil.getFileSuffix("/sdcard/a.txt");
+			
+			//格式化文件大小，如1024=1k
+			FileUtil.formatFileSize(12343);
+			
+			//读文件内容，以文本方式输出
+			FileUtil.readFileFromSDCard("/sdcard", "a.txt");
+			
+			//读文件内容，以byte[]方式输出
+			FileUtil.readFileFromSDCardForBytes("/sdcard", "a.txt");
+			
+			//更多...
+		} catch (IOException e) {
+		}
+		
+		
+		//////////////////////////////日志打印工具类
+		
+		//开启日志
+		LogUtil.enableLog();
+		
+		//关闭日志
+		LogUtil.disableLog();
+		
+		//不同级别的日志打印
+		LogUtil.v(TAG, "");
+		LogUtil.d(TAG, "");
+		LogUtil.i(TAG, "");
+		LogUtil.w(TAG, "");
+		LogUtil.e(TAG, "");
+		
+		//////////////////////////////MD5摘要
+		
+		try {
+			//字节数组MD5摘要为32位字符串
+			MD5.hexdigest(new byte[]{0x10,0x12,0x11});
+		} catch (NoSuchAlgorithmException e) {
+		}
+		
+		//对字符串文本做MD5摘要
+		MD5.hexdigest("text");
+		
+		
+		//////////////////////////////网络类
+		
+		//有效的网络信息
+		NetworkUtil.getActiveNetworkInfo(BaseApplication.getInstance());
+		
+		//获取指定网络信息
+		NetworkUtil.getNetworkInfo(BaseApplication.getInstance(), ConnectivityManager.TYPE_MOBILE);
+		
+		//获取当前网络类型
+		NetworkUtil.getNetworkType(BaseApplication.getInstance());
+		
+		//获取wifi连接状态
+		NetworkUtil.getWifiConnectivityState(BaseApplication.getInstance());
+		
+		//获取wifi状态
+		NetworkUtil.getWifiState(BaseApplication.getInstance());
+		
+		//判断是否有网络权限
+		NetworkUtil.hasInternetPermission(BaseApplication.getInstance());
+		
+		//判断当前是否为移动网络
+		NetworkUtil.isMobileNetwork(BaseApplication.getInstance());
+		
+		//判断网络是否有效
+		NetworkUtil.isNetworkAvailable(BaseApplication.getInstance());
+		
+		//判断wifi是否有效
+		NetworkUtil.isWifiValid(BaseApplication.getInstance());
+		
+		//连接wifi
+		NetworkUtil.wifiConnection(BaseApplication.getInstance(), "", "");
+		
+		
+		//////////////////////////////获取手机端各种参数等
+		
+		//获取meta-data中的参数
+		PackageUtil.getConfigBoolean(BaseApplication.getInstance(), "key");
+		PackageUtil.getConfigInt(BaseApplication.getInstance(), "key");
+		PackageUtil.getConfigString(BaseApplication.getInstance(), "key");
+		
+		//获取设备ID
+		PackageUtil.getDeviceId(BaseApplication.getInstance());
+		
+		//以MD5形式返回设备ID
+		PackageUtil.getDeviceIdMD5(BaseApplication.getInstance());
+		
+		//收取手机型号
+		PackageUtil.getDeviceType();
+		
+		//动态获取资源id
+		PackageUtil.getIdentifier(BaseApplication.getInstance(), "ic_launch", "drwable");
+		
+		//获取网卡地址
+		PackageUtil.getLocalMacAddress(BaseApplication.getInstance());
+		
+		//获取位置信息
+		PackageUtil.getLocation(BaseApplication.getInstance());
+		
+		//根据apk路径获取安装包信息
+		PackageUtil.getPackageInfoByApkPath(BaseApplication.getInstance(), "/sdcard/a.apk");
+		
+		//根据安装apk的包名获取安装包信息
+		PackageUtil.getPackageInfoByPackageName(BaseApplication.getInstance(), "#{AppPackage}");
+		
+		//获取屏幕高度
+		PackageUtil.getScreenHeight(BaseApplication.getInstance());
+		
+		//获取屏幕密度
+		PackageUtil.getScreenScale(BaseApplication.getInstance());
+		
+		//获取屏幕大小
+		PackageUtil.getScreenSize(BaseApplication.getInstance());
+		
+		//获取屏幕宽度
+		PackageUtil.getScreenWidth(BaseApplication.getInstance());
+		
+		//获取apk的签名
+		PackageUtil.getSign(BaseApplication.getInstance(), "#{AppPackage}");
+		
+		//根据资源ID获取字符串
+		PackageUtil.getString(BaseApplication.getInstance(), R.string.cancel);
+		
+		//获取android系统版本
+		PackageUtil.getSysVersion();
+		
+		//获取手机号码，有些手机卡获取不到
+		PackageUtil.getTelNumber(BaseApplication.getInstance());
+		
+		//获得手机端终端唯一标识
+		PackageUtil.getTerminalSign(BaseApplication.getInstance());
+		
+		//获取版本号
+		PackageUtil.getVersionCode(BaseApplication.getInstance());
+		
+		//获取版本号名称
+		PackageUtil.getVersionName(BaseApplication.getInstance());
+		
+		//是否支持actionbar
+		PackageUtil.hasActionBar();
+		
+		//安装apk
+		PackageUtil.installApk(BaseApplication.getInstance(), "/sdcard/a.apk");
+		
+		//判断app是否已启动
+		PackageUtil.isAppOpen(BaseApplication.getInstance());
+		
+		//判断当前语言环境是否为中文
+		PackageUtil.isChineseLocale(BaseApplication.getInstance());
+		
+		//当前app是否在最前端
+		PackageUtil.isTopApplication(BaseApplication.getInstance());
+		
+		//根据包名启动app
+		PackageUtil.startAppByPackageName(BaseApplication.getInstance(), "#{AppPackage}");
+		
+		//卸载app
+		PackageUtil.uninstallApk(BaseApplication.getInstance(), "#{AppPackage}");
+		
+		//////////////////////////////其他工具类
+		
+		//url编码
+		Utility.parseUrl("http://www.luoxudong.com?param=aaa");
+		
+		//url解码
+		Utility.decodeUrl("http://www.luoxudong.com");
+		
+		//生成uuid
+		Utility.generateGUID();
+		
+		//过滤null，转换成空字符串
+		Utility.safeString(null);
+	}
+}

@@ -136,6 +136,8 @@ public class AppGenerator {
 			File srcDir = new File(getFilePath(mTempFilePackage, "src"));
 			copySrc(srcDir, mDestFile);
 			
+			
+			System.out.println("生产app项目完成");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -326,14 +328,28 @@ public class AppGenerator {
 						newDir.mkdirs();
 						copyRes(file, newDir);
 					}else{
-						if (!"true".equals(mProp.getProperty("ShareSDK")) && (file.getName().indexOf("logo_") == 0 || "oks_strings.xml".equals(file.getName()) || "ssdk_strings.xml".equals(file.getName()))) {//不需要分享SDK
-							continue;
-						}else if (!"true".equals(mProp.getProperty("PushSDK")) && (file.getName().indexOf("getui_") == 0 || "push.png".equals(file.getName()))) {//不需要推送SDK
+						if (!file.getName().endsWith(".txt")){
 							continue;
 						}
 						
+						/*if (!"true".equals(mProp.getProperty("ShareSDK")) && (file.getName().indexOf("logo_") == 0 || "oks_strings.xml".equals(file.getName()) || "ssdk_strings.xml".equals(file.getName()))) {//不需要分享SDK
+							continue;
+						}else if (!"true".equals(mProp.getProperty("PushSDK")) && (file.getName().indexOf("getui_") == 0 || "push.png".equals(file.getName()))) {//不需要推送SDK
+							continue;
+						}*/
+						
+						//替换文件名
+						String fileName = file.getName().replace(".txt", ".java");
+						
+						Set<Object> ps = mProp.keySet();
+						for (Object o : ps) {
+							String key = (String) o;
+							String value = mProp.getProperty(key);
+							fileName = fileName.replaceAll("\\#\\{" + key + "\\}", value);
+						}
+						
 						try {
-							stringToFile(new File(desDir.getAbsolutePath(), file.getName()), readTpl(file));
+							stringToFile(new File(desDir.getAbsolutePath(), fileName), readTpl(file));
 						} catch (IOException e) {
 							e.printStackTrace();
 						}

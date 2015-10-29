@@ -1,0 +1,40 @@
+/**
+ * Title: ThreadPoolHelp.java
+ * Description: 
+ * Copyright: Copyright (c) 2013-2015 luoxudong.com
+ * Company: 个人
+ * Author: 罗旭东 (hi@luoxudong.com)
+ * Date: 2015年8月4日 下午5:31:34
+ * Version: 1.0
+ */
+package #{AppPackage}.ui.codestyle.simples;
+
+import com.luoxudong.app.threadpool.constant.ThreadPoolConst;
+import com.luoxudong.app.threadpool.manager.ThreadTaskObject;
+
+/** 
+ * <pre>
+ * ClassName: ThreadPoolHelp
+ * Description:TODO(这里用一句话描述这个类的作用)
+ * Create by: 罗旭东
+ * Date: 2015年8月4日 下午5:31:34
+ * </pre>
+ */
+public class ThreadPoolHelp {
+	public static void main(String[] args) {
+		//创建线程任务
+		new ThreadTaskObject(){
+			public void run() {
+				//线程中耗时操作
+			};
+		}.start();
+		
+		
+		//在指定线程池中创建任务
+		new ThreadTaskObject(ThreadPoolConst.THREAD_TYPE_WORK){
+			public void run() {
+				//线程中耗时操作
+			};
+		}.start();
+	}
+}

@@ -1,0 +1,51 @@
+/**
+ * Title: CharsetUtil.java
+ * Description:
+ * Copyright: Copyright (c) 2013 luoxudong.com
+ * Company:个人
+ * Author 罗旭东 (hi@luoxudong.com)
+ * Date 2014年11月4日 下午3:12:03
+ * Version 1.0
+ */
+package #{AppPackage}.logic.utils;
+
+/** 
+ * ClassName: CharsetUtil
+ * Description:TODO(这里用一句话描述这个类的作用)
+ * Create by 罗旭东
+ * Date 2014年11月4日 下午3:12:03
+ */
+public class CharsetUtil {
+	public static String gbEncoding(final String gbString) {
+		char[] utfBytes = gbString.toCharArray();
+		String unicodeBytes = "";
+		for (int byteIndex = 0; byteIndex < utfBytes.length; byteIndex++) {
+			String hexB = Integer.toHexString(utfBytes[byteIndex]);
+			if (hexB.length() <= 2) {
+				hexB = "00" + hexB;
+			}
+			unicodeBytes = unicodeBytes + "\\u" + hexB;
+		}
+		System.out.println("unicodeBytes is: " + unicodeBytes);
+		return unicodeBytes;
+	}
+
+	public static String decodeUnicode(final String dataStr) {
+		int start = 0;
+		int end = 0;
+		final StringBuffer buffer = new StringBuffer();
+		while (start > -1) {
+			end = dataStr.indexOf("\\u", start + 2);
+			String charStr = "";
+			if (end == -1) {
+				charStr = dataStr.substring(start + 2, dataStr.length());
+			} else {
+				charStr = dataStr.substring(start + 2, end);
+			}
+			char letter = (char) Integer.parseInt(charStr, 16); // 16进制parse整形字符串。
+			buffer.append(new Character(letter).toString());
+			start = end;
+		}
+		return buffer.toString();
+	}
+}

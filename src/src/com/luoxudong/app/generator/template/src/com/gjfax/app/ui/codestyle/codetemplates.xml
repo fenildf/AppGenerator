@@ -8,9 +8,9 @@
  */</template><template autoinsert="false" context="filecomment_context" deleted="false" description="Comment for created Java files" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.filecomment" name="filecomment">/**
  * Title: ${file_name}
  * Description: 
- * Copyright: Copyright (c) 2015 gjfax.com
- * Company: 深圳市前海融资租赁金融交易中心
- * Author: 宋 婷
+ * Copyright: Copyright (c) 2015 luoxudong.com
+ * Company: 个人
+ * Author: 罗旭东
  * Date: ${date} ${time}
  * Version: 1.0
  */</template><template autoinsert="false" context="typecomment_context" deleted="false" description="Comment for created types" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.typecomment" name="typecomment">/** 
