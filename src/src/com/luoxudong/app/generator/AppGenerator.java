@@ -326,7 +326,7 @@ public class AppGenerator {
 					if (file.isDirectory()){
 						File newDir = new File(desDir, file.getName());
 						newDir.mkdirs();
-						copyRes(file, newDir);
+						copySrc(file, newDir);
 					}else{
 						if (!file.getName().endsWith(".txt")){
 							continue;

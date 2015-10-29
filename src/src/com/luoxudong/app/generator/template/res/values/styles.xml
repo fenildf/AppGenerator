@@ -78,7 +78,7 @@
     
     
     <!-- 底部选项卡样式 -->
-    <style name="tabbarRadioGroup">
+    <style name="TabbarRadioGroup">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">horizontal</item>
@@ -87,7 +87,7 @@
     </style>
     
     <!-- 选项卡标签样式 -->
-    <style name="tabbarRadioButton">
+    <style name="TabbarRadioButton">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:textColor">@color/main_tabbar_text</item>
         <item name="android:layout_height">match_parent</item>

@@ -15,24 +15,24 @@
 
         <RadioGroup
             android:id="@+id/rg_main_tab"
-            style="@style/tabbar_radio_group"
+            style="@style/TabbarRadioGroup"
             android:checkedButton="@+id/rb_recommend" >
 
             <RadioButton
                 android:id="@+id/rb_recommend"
-                style="@style/tabbar_radio_button" />
+                style="@style/TabbarRadioButton" />
 
             <RadioButton
                 android:id="@+id/rb_invest"
-                style="@style/tabbar_radio_button" />
+                style="@style/TabbarRadioButton" />
 
             <RadioButton
                 android:id="@+id/rb_my_assets"
-                style="@style/tabbar_radio_button" />
+                style="@style/TabbarRadioButton" />
             
             <RadioButton
                 android:id="@+id/rb_more"
-                style="@style/tabbar_radio_button" />
+                style="@style/TabbarRadioButton" />
         </RadioGroup>
         <LinearLayout 
             android:layout_width="match_parent"
