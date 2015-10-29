@@ -16,6 +16,11 @@
     <dimen name="common_block_layout_margin">4dp</dimen>
     <dimen name="common_dialog_padding">15dp</dimen>
     <dimen name="common_btn_top_margin">45dp</dimen><!-- 按钮左边边距 -->
+    <dimen name="common_title_right_text">16sp</dimen>
+    <dimen name="common_title_back_padding">6dp</dimen>
     
+    <dimen name="main_tabbar_text">12sp</dimen>
+    <dimen name="main_tabbar_padding">5dp</dimen>
     <dimen name="new_msg_tip_num_w">14dp</dimen>
+    <dimen name="new_msg_tip_w">10dp</dimen>
 </resources>

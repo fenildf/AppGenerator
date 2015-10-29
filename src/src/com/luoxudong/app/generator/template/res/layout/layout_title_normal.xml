@@ -21,14 +21,6 @@
         layout="@layout/layout_title_style_2"
         android:visibility="gone" />
 
-    <include
-        android:id="@+id/layout_title_style_3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        layout="@layout/layout_title_style_3"
-        android:visibility="gone" />
-
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"

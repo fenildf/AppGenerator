@@ -8,6 +8,7 @@
     <color name="common_black">#000000</color><!-- 纯黑 -->
     <color name="common_blue">#3636FF</color><!-- 蓝色 -->
     <color name="common_red">#FE3333</color><!-- 红色 -->
+    <color name="common_gray">#8e8e8e</color>
     <color name="common_title_text">#E9F4FC</color><!-- 标题文字颜色 -->
     <color name="common_title_background">#0F6FD8</color><!-- 标题背景色 -->
     <color name="common_title_shadow">#03B39F</color><!-- 标题阴影色 -->
@@ -16,6 +17,15 @@
     <color name="common_gray_transparent">#7F000000</color><!-- 半透明 -->
     <color name="common_dialog_bg">#29000000</color><!-- 半透明 -->
     <color name="common_hint">#cecece</color><!-- 输入文字提示颜色 -->
+    <color name="common_list_bg_normal">#ffffff</color>
+    <color name="common_list_bg_pressed">#f3f3f3</color>
+    <color name="common_btn_title_text_normal">#ffffff</color>
+    <color name="common_btn_title_text_pressed">#9bc4ee</color>
+    <color name="common_tab_underline_sel">#3789DD</color>
+    <color name="common_tab_underline_unsel">#3789DD</color>
+    
+    <color name="main_tabbar_text_uncheck">#8e8e8e</color>
+    <color name="main_tabbar_text_check">#3789DD</color>
     
     <color name="new_msg_tip_bg">#FF0000</color>
 </resources>
