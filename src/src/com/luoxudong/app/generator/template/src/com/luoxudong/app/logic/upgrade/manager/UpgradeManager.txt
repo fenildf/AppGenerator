@@ -9,19 +9,9 @@
  */
 package #{AppPackage}.logic.upgrade.manager;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
 import android.content.Context;
-import android.text.TextUtils;
 
-import #{AppPackage}.logic.network.NetworkApiUtil;
 import #{AppPackage}.logic.upgrade.interfaces.IUpgradeManager;
-import #{AppPackage}.logic.utils.ConfigUtil;
-import com.luoxudong.app.asynchttp.AsyncHttpUtil;
-import com.luoxudong.app.asynchttp.callable.SimpleRequestCallable;
-import com.luoxudong.app.utils.PackageUtil;
 
 /** 
  * ClassName: UpgradeManager

@@ -21,7 +21,6 @@ import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 
 import #{AppPackage}.R;
-import #{AppPackage}.logic.common.BaseConstant;
 import #{AppPackage}.logic.push.interfaces.IPushManager;
 import #{AppPackage}.logic.push.vo.Notice;
 import #{AppPackage}.logic.utils.MetaDataUtil;

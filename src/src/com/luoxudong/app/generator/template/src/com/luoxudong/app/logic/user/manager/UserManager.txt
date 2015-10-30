@@ -10,27 +10,19 @@
 package #{AppPackage}.logic.user.manager;
 
 import android.content.Context;
-import android.content.Intent;
-import android.text.TextUtils;
 
-import #{AppPackage}.logic.common.BaseApplication;
 import #{AppPackage}.logic.common.BaseConstant;
 import #{AppPackage}.logic.db.dao.UserInfoDao;
 import #{AppPackage}.logic.db.dao.interfaces.IUserInfoDao;
 import #{AppPackage}.logic.db.model.UserInfo;
-import #{AppPackage}.logic.exception.#{ProjectPrefix}ExceptionCode;
 import #{AppPackage}.logic.network.NetworkApiUtil;
 import #{AppPackage}.logic.network.http.model.request.LoginReq;
-import #{AppPackage}.logic.network.http.model.response.DefaultRsp;
 import #{AppPackage}.logic.network.http.model.response.LoginRsp;
 import #{AppPackage}.logic.user.interfaces.IUserManager;
-import #{AppPackage}.logic.utils.ConfigUtil;
 import #{AppPackage}.logic.utils.GlobalUtil;
-import #{AppPackage}.logic.utils.MetaDataUtil;
 import com.luoxudong.app.asynchttp.AsyncHttpUtil;
 import com.luoxudong.app.asynchttp.callable.JsonRequestCallable;
 import com.luoxudong.app.database.DaoManagerFactory;
-import com.luoxudong.app.singletonfactory.SingletonFactory;
 
 /**
  * ClassName: UserManager Description: TODO(这里用一句话描述这个类的作用) Create by: 罗旭东 Date:

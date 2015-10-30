@@ -20,7 +20,6 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.RelativeLayout;
 
 import #{AppPackage}.R;
 import #{AppPackage}.logic.common.BaseConstant;
@@ -41,7 +40,6 @@ import com.umeng.analytics.MobclickAgent;
  * </pre>
  */
 public class MainActivity extends FragmentActivity {
-	private final static int REQUEST_CODE_LOGIN = 1;
 
 	public final static int TAB_ID_DEFAULT = R.id.rb_tab_one;
 
@@ -75,9 +73,6 @@ public class MainActivity extends FragmentActivity {
 	private Class<? extends BaseFragment>[] mTargetFragments = new Class[] {TabOneFragment.class, TabTwoFragment.class, TabThreeFragment.class, TabFourFragment.class };
 
 	private long mTimestamp = 0;
-
-	/** 当前选中的tab */
-	private int mCheckedId = 0;
 
 
 	private OnCheckedChangeListener onCheckedChangeListener = new OnCheckedChangeListener() {
@@ -208,7 +203,6 @@ public class MainActivity extends FragmentActivity {
 		FragmentTransaction ft = mFragmentManager.beginTransaction();
 		mLastFragment = mCurrentFragment = mFragmentSparseArray
 				.get((Integer) mRadioButtonIds[0]);
-		mCheckedId = R.id.rb_tab_one;
 		ft.add(R.id.main_content, mCurrentFragment);
 		ft.commitAllowingStateLoss();
 	}
@@ -230,7 +224,5 @@ public class MainActivity extends FragmentActivity {
 		mLastFragment = mCurrentFragment;
 		ft.commitAllowingStateLoss();
 		mCurrentFragment.showFragment();
-
-		mCheckedId = tabId;
 	}
 }

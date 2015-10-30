@@ -12,11 +12,9 @@ package #{AppPackage}.logic.common;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
 
 import #{AppPackage}.R;
 import #{AppPackage}.logic.exception.#{ProjectPrefix}ExceptionCode;
-import #{AppPackage}.logic.utils.ConfigUtil;
 import #{AppPackage}.logic.utils.GlobalUtil;
 import com.luoxudong.app.asynchttp.exception.AsyncHttpExceptionCode;
 

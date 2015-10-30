@@ -9,8 +9,6 @@
  */
 package #{AppPackage}.logic.user.manager;
 
-import java.util.List;
-
 import #{AppPackage}.logic.common.BaseCallable;
 import #{AppPackage}.logic.db.model.UserInfo;
 

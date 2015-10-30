@@ -22,9 +22,7 @@ import android.text.TextUtils;
 import android.widget.ImageView;
 
 import #{AppPackage}.R;
-import #{AppPackage}.logic.common.BaseConstant;
 import #{AppPackage}.logic.utils.ConfigUtil;
-import #{AppPackage}.ui.utils.TimeUtil;
 import com.igexin.sdk.PushManager;
 
 /**

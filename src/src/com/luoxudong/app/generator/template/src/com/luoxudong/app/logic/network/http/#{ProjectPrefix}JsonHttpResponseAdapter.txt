@@ -9,15 +9,8 @@
  */
 package #{AppPackage}.logic.network.http;
 
-import android.content.Intent;
-import android.text.TextUtils;
-
-import #{AppPackage}.logic.common.BaseApplication;
 import #{AppPackage}.logic.exception.#{ProjectPrefix}ExceptionCode;
 import #{AppPackage}.logic.network.http.model.response.BaseRsp;
-import #{AppPackage}.logic.user.UserFactory;
-import #{AppPackage}.logic.user.manager.UserCallable;
-import #{AppPackage}.logic.utils.ConfigUtil;
 import com.luoxudong.app.asynchttp.adapter.BaseJsonHttpResponseAdapter;
 import com.luoxudong.app.asynchttp.model.BaseResponse;
 
