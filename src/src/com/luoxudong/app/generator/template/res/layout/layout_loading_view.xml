@@ -21,9 +21,9 @@
             android:id="@+id/tv_loading_view_loading_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/loading_dialog_margin_top"
+            android:layout_marginTop="@dimen/common_loading_dialog_margin_top"
             android:text="@string/common_loading"
-            android:textColor="@color/gjfax_gray" />
+            android:textColor="@color/common_gray" />
     </LinearLayout>
 
     <LinearLayout
@@ -44,9 +44,9 @@
             android:id="@+id/tv_loading_view_error_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/loading_dialog_margin_top"
-            android:text="@string/loading_error_refresh"
-            android:textColor="@color/gjfax_gray" />
+            android:layout_marginTop="@dimen/common_loading_dialog_margin_top"
+            android:text="@string/common_loading_error_refresh"
+            android:textColor="@color/common_gray" />
     </LinearLayout>
 
     <LinearLayout
@@ -67,8 +67,8 @@
             android:id="@+id/tv_loading_view_suc_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/loading_dialog_margin_top"
-            android:textColor="@color/gjfax_gray" />
+            android:layout_marginTop="@dimen/common_loading_dialog_margin_top"
+            android:textColor="@color/common_gray" />
     </LinearLayout>
 
 </FrameLayout>

@@ -267,7 +267,7 @@ public class AppGenerator {
 						newDir.mkdirs();
 						copyLibs(file, newDir);
 					}else{
-						if (!"true".equals(mProp.getProperty("ShareSDK")) && file.getName().indexOf("ShareSDK-") == 0) {//不需要分享SDK
+						if (!"true".equals(mProp.getProperty("ShareSDK")) && (file.getName().indexOf("ShareSDK-") == 0 || "MobTools.jar".equals(file.getName()))) {//不需要分享SDK
 							continue;
 						}else if (!"true".equals(mProp.getProperty("PushSDK")) && (file.getName().indexOf("Getui") == 0 || "libgetuiext.so".equals(file.getName()))) {//不需要推送SDK
 							continue;

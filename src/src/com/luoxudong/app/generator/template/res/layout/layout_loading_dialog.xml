@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/common_loading_dialog_margin_top"
-        android:text="@string/common_loading"
+        android:text="@string/common_loading_error_refresh"
         android:textColor="#cacaca" />
 
 </LinearLayout>

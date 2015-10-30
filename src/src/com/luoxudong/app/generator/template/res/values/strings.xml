@@ -7,6 +7,7 @@
     <string name="common_dialog_title">提示</string>
     <string name="common_btn_ok">确定</string>
     <string name="common_loading">加载中...</string>
+    <string name="common_loading_error_refresh">轻触屏幕重新加载</string>
     
     <string name="title_notice">通知</string>
 </resources>

@@ -147,38 +147,6 @@ public class ViewUtil {
 		imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 	}
 	
-	public static Drawable getDrwableByNum(Context context, String num, int type){
-		Drawable drawable = null;
-		
-		if (context == null){//退出app，界面已销毁时出现null
-			return BaseApplication.getInstance().getResources().getDrawable(R.drawable.num_0);
-		}
-		
-		if ("0".equals(num)){
-			drawable = context.getResources().getDrawable(R.drawable.num_0);
-		}else if ("1".equals(num)){
-			drawable = context.getResources().getDrawable(R.drawable.num_1);
-		}else if ("2".equals(num)){
-			drawable = context.getResources().getDrawable(R.drawable.num_2);
-		}else if ("3".equals(num)){
-			drawable = context.getResources().getDrawable(R.drawable.num_3);
-		}else if ("4".equals(num)){
-			drawable = context.getResources().getDrawable(R.drawable.num_4);
-		}else if ("5".equals(num)){
-			drawable = context.getResources().getDrawable(R.drawable.num_5);
-		}else if ("6".equals(num)){
-			drawable = context.getResources().getDrawable(R.drawable.num_6);
-		}else if ("7".equals(num)){
-			drawable = context.getResources().getDrawable(R.drawable.num_7);
-		}else if ("8".equals(num)){
-			drawable = context.getResources().getDrawable(R.drawable.num_8);
-		}else if ("9".equals(num)){
-			drawable = context.getResources().getDrawable(R.drawable.num_9);
-		}
-		
-		return drawable;
-	}
-	
 	/**
 	 * 获取屏幕尺寸 songting
 	 * @param context
@@ -186,8 +154,7 @@ public class ViewUtil {
 	 */
 	public static int[] getScreenDispaly(Context context) {
 		WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-		//int width = windowManager.getDefaultDisplay().getWidth();// ??????????
-		//int height = windowManager.getDefaultDisplay().getHeight();// ??????????
+		
 		Point mPoint = new Point();
 		windowManager.getDefaultDisplay().getSize(mPoint);
 		int width = mPoint.x;

@@ -39,10 +39,10 @@ public class AsyncHttpHelp {
 		AsyncHttpLog.disableLog();
 		
 		//设置ssl传输
-		AsyncHttpUtil.setSSLSocketFactory(GjfaxSSLSocketFactory.getInstance());
+		AsyncHttpUtil.setSSLSocketFactory(#{ProjectPrefix}SSLSocketFactory.getInstance());
 		
 		//设置json请求返回结果过滤
-		AsyncHttpUtil.setResponseAdapter(new GjfaxJsonHttpResponseAdapter());
+		AsyncHttpUtil.setResponseAdapter(new #{ProjectPrefix}JsonHttpResponseAdapter());
 		
 		//普通get请求
 		AsyncHttpUtil.simpleGetHttpRequest("http://www.gjfax.com", new SimpleRequestCallable() {
