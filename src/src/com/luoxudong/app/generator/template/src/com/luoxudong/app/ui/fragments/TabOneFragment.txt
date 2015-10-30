@@ -1,0 +1,52 @@
+/**
+ * Title: TabOneFragment.java
+ * Description: 
+ * Copyright: Copyright (c) 2013-2015 luoxudong.com
+ * Company: 个人
+ * Author: 罗旭东 (hi@luoxudong.com)
+ * Date: 2015年8月5日 上午10:09:33
+ * Version: 1.0
+ */
+package #{AppPackage}.ui.fragments;
+
+import android.os.Bundle;
+
+/** 
+ * <pre>
+ * ClassName: TabOneFragment
+ * Description:TODO(这里用一句话描述这个类的作用)
+ * Create by: 罗旭东
+ * Date: 2015年8月5日 上午10:09:33
+ * </pre>
+ */
+public class TabOneFragment extends BaseFragment {
+	@Override
+	protected int getFragmentLayoutResId() {
+		return 0;
+	}
+
+	@Override
+	protected void onCreateFindView(Bundle savedInstanceState) {
+		
+	}
+
+	@Override
+	protected void onCreateAddListener(Bundle savedInstanceState) {
+		
+	}
+
+	@Override
+	protected void onCreateInitData(Bundle savedInstanceState) {
+		
+	}
+
+	@Override
+	protected void onCreateTaskLoadData() {
+		
+	}
+
+	@Override
+	protected void onCreateTaskAddView() {
+		
+	}
+}

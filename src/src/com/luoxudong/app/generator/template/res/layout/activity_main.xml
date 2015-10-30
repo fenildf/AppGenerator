@@ -3,82 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+
     <FrameLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
         android:layout_height="0.0dip"
-        android:layout_weight="1.0"/>
-    
-    <FrameLayout 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_weight="1.0" />
 
-        <RadioGroup
-            android:id="@+id/rg_main_tab"
-            style="@style/TabbarRadioGroup"
-            android:checkedButton="@+id/rb_recommend" >
+    <RadioGroup
+        android:id="@+id/rg_main_tab"
+        style="@style/TabbarRadioGroup"
+        android:checkedButton="@+id/rb_tab_one" >
 
-            <RadioButton
-                android:id="@+id/rb_recommend"
-                style="@style/TabbarRadioButton" />
+        <RadioButton
+            android:id="@+id/rb_tab_one"
+            style="@style/TabbarRadioButton" />
 
-            <RadioButton
-                android:id="@+id/rb_invest"
-                style="@style/TabbarRadioButton" />
+        <RadioButton
+            android:id="@+id/rb_tab_two"
+            style="@style/TabbarRadioButton" />
 
-            <RadioButton
-                android:id="@+id/rb_my_assets"
-                style="@style/TabbarRadioButton" />
-            
-            <RadioButton
-                android:id="@+id/rb_more"
-                style="@style/TabbarRadioButton" />
-        </RadioGroup>
-        <LinearLayout 
-            android:layout_width="match_parent"
-        	android:layout_height="match_parent"
-        	android:orientation="horizontal">
-            <RelativeLayout 
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-                
-            </RelativeLayout>
-            <RelativeLayout 
-                android:id="@+id/rl_invest"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+        <RadioButton
+            android:id="@+id/rb_tab_three"
+            style="@style/TabbarRadioButton" />
 
-            </RelativeLayout>
-            <RelativeLayout 
-                android:id="@+id/rl_my_assets"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+        <RadioButton
+            android:id="@+id/rb_tab_four"
+            style="@style/TabbarRadioButton" />
+    </RadioGroup>
 
-                <TextView
-                    android:layout_width="@dimen/new_msg_tip_num_w"
-                    android:layout_height="@dimen/new_msg_tip_num_w"
-                    android:background="@drawable/new_msg_tip"
-                    android:textColor="@color/common_white"
-                    android:gravity="center"
-                    android:textSize="10sp" />
-            </RelativeLayout>
-            
-            <RelativeLayout 
-                android:id="@+id/rl_more"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/new_msg_tip" />
-
-            </RelativeLayout>
-        </LinearLayout>
-    </FrameLayout>
-    
 </LinearLayout>
