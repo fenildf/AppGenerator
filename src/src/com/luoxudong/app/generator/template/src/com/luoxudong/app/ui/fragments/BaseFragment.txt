@@ -379,7 +379,6 @@ public abstract class BaseFragment extends Fragment{
 			mTitleView.findViewById(R.id.tv_title).setVisibility(View.VISIBLE);
 			mTitleView.findViewById(R.id.layout_title_style_1).setVisibility(View.GONE);
 			mTitleView.findViewById(R.id.layout_title_style_2).setVisibility(View.GONE);
-			mTitleView.findViewById(R.id.layout_title_style_3).setVisibility(View.GONE);
 			
 			((TextView)mTitleView.findViewById(R.id.tv_title)).setText(getResources().getString(R.string.app_name));
 			
@@ -394,7 +393,6 @@ public abstract class BaseFragment extends Fragment{
 			mTitleView.findViewById(R.id.tv_title).setVisibility(View.VISIBLE);
 			mTitleView.findViewById(R.id.layout_title_style_1).setVisibility(View.VISIBLE);
 			mTitleView.findViewById(R.id.layout_title_style_2).setVisibility(View.GONE);
-			mTitleView.findViewById(R.id.layout_title_style_3).setVisibility(View.GONE);
 		}
 	}
 	
@@ -406,36 +404,12 @@ public abstract class BaseFragment extends Fragment{
 			mTitleView.findViewById(R.id.tv_title).setVisibility(View.GONE);
 			mTitleView.findViewById(R.id.layout_title_style_1).setVisibility(View.GONE);
 			mTitleView.findViewById(R.id.layout_title_style_2).setVisibility(View.VISIBLE);
-			mTitleView.findViewById(R.id.layout_title_style_3).setVisibility(View.GONE);
 			
 			if (!TextUtils.isEmpty(rightText)){
 				Button textView = (Button)mTitleView.findViewById(R.id.layout_title_style_2).findViewById(R.id.btn_title_right_2);
 				textView.setText(rightText);
 			}
 			
-		}
-	}
-	
-	/**
-	 * 首页标题样式
-	 */
-	protected void initMainTitle(){
-		if (mTitleView != null){
-			mTitleView.findViewById(R.id.tv_title).setVisibility(View.GONE);
-			mTitleView.findViewById(R.id.layout_title_style_1).setVisibility(View.GONE);
-			mTitleView.findViewById(R.id.layout_title_style_2).setVisibility(View.GONE);
-			mTitleView.findViewById(R.id.layout_title_style_3).setVisibility(View.VISIBLE);
-		}
-	}
-	
-	
-	protected void setMainTitleRightView(boolean visible){
-		if (mTitleView != null){
-			if (visible){
-				mTitleView.findViewById(R.id.btn_title_right_3).setVisibility(View.VISIBLE);
-			}else{
-				mTitleView.findViewById(R.id.btn_title_right_3).setVisibility(View.GONE);
-			}
 		}
 	}
 	

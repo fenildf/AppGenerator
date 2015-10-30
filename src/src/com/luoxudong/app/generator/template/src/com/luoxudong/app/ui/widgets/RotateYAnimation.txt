@@ -1,0 +1,84 @@
+/**
+ * Title: RotateYAnimation.java
+ * Description: 
+ * Copyright: Copyright (c) 2013-2015 luoxudong.com
+ * Company: 个人
+ * Author: 罗旭东 (hi@luoxudong.com)
+ * Date: 2015年8月23日 下午4:13:19
+ * Version: 1.0
+ */
+package #{AppPackage}.ui.widgets;
+
+import android.graphics.Camera;
+import android.graphics.Matrix;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.Transformation;
+
+/** 
+ * <pre>
+ * ClassName: RotateYAnimation
+ * Description:以Y轴为中心旋转动画
+ * Create by: 罗旭东
+ * Date: 2015年8月23日 下午4:13:19
+ * </pre>
+ */
+public class RotateYAnimation extends Animation {
+	/** 动画显示时长 */  
+    public static final long DURATION = 1000; 
+    
+	private float mCenterX = 0;
+
+	private float mCenterY = 0;
+
+    /** 从上往下看是否为顺时针 */
+	private boolean mClockwise = true;
+
+	private Camera mCamera = null;
+	
+	public RotateYAnimation() {
+		setDuration(DURATION);
+	}
+	
+	public RotateYAnimation(float cX, float cY, boolean isClockwise) {
+		mCenterX = cX;
+		mCenterY = cY;
+		mClockwise = isClockwise;
+		setDuration(DURATION);
+	}
+	
+	@Override
+	public void initialize(int width, int height, int parentWidth, int parentHeight) {
+		super.initialize(width, height, parentWidth, parentHeight);
+		mCamera = new Camera();
+		mCenterX = width/2;
+		mCenterY = height;
+		setInterpolator(new LinearInterpolator());//均匀变化
+	}
+	
+	@Override
+	protected void applyTransformation(float interpolatedTime, Transformation t) {
+		float from = 0.0f, to = 0.0f;
+		if (mClockwise) {
+			from = 360.0f;
+			to = 180.0f;
+		}
+
+		float degree = from + (to - from) * interpolatedTime;
+		boolean overHalf = (interpolatedTime > 0.5f);
+		if (overHalf) {
+			// 翻转过半的情况下，为保证view仍为可读的文字而非镜面效果的文字，需翻转180度。
+			degree = degree - 180;
+		}
+		float depth = 0.0f;
+		final Matrix matrix = t.getMatrix();
+		mCamera.save();
+		mCamera.translate(0.0f, 0.0f, depth);
+		mCamera.rotateY(degree);
+		mCamera.getMatrix(matrix);
+		// 确保图片的翻转过程一直处于组件的中心点位置
+		matrix.preTranslate(-mCenterX, -mCenterY);
+		matrix.postTranslate(mCenterX, mCenterY);
+		mCamera.restore();
+	}
+}

@@ -18,8 +18,6 @@ import #{AppPackage}.R;
 import #{AppPackage}.logic.exception.#{ProjectPrefix}ExceptionCode;
 import #{AppPackage}.logic.utils.ConfigUtil;
 import #{AppPackage}.logic.utils.GlobalUtil;
-import #{AppPackage}.ui.activities.GestureLoginActivity;
-import #{AppPackage}.ui.activities.LoginActivity;
 import com.luoxudong.app.asynchttp.exception.AsyncHttpExceptionCode;
 
 /**
@@ -62,13 +60,7 @@ public abstract class BaseCallable {
 	 */
 	public void onSessionTimeOut(Context context, int errorCode, String errorMsg) {
 		Intent intent = new Intent();
-		if (ConfigUtil.isNeedGesturePwd()
-				&& !TextUtils.isEmpty(ConfigUtil.getUserId())
-				&& !TextUtils.isEmpty(ConfigUtil.getPassword())) {
-			intent.setClass(context, GestureLoginActivity.class);
-		} else {
-			intent.setClass(context, LoginActivity.class);
-		}
+		//intent.setClass(context, LoginActivity.class);
 		
 		if (context instanceof Activity){
 			startActForResult(context, intent, BaseConstant.REQUEST_CODE_TIMEOUT_LOGIN);
@@ -87,13 +79,13 @@ public abstract class BaseCallable {
 	 */
 	public void checkErrorCode(Context context, int errorCode, String errorMsg) {
 		// 登录超时
-		if (errorCode == GjfaxExceptionCode.sessionTimeOut.getErrorCode()) {
+		if (errorCode == #{ProjectPrefix}ExceptionCode.sessionTimeOut.getErrorCode()) {
 			GlobalUtil.setSid(null);
 			onSessionTimeOut(context, errorCode, errorMsg);
 			errorMsg = "";//不弹出toast信息
 		}
 
-		if (errorCode == GjfaxExceptionCode.unknown.getErrorCode() || errorCode <= AsyncHttpExceptionCode.defaultExceptionCode.getErrorCode()){
+		if (errorCode == #{ProjectPrefix}ExceptionCode.unknown.getErrorCode() || errorCode <= AsyncHttpExceptionCode.defaultExceptionCode.getErrorCode()){
 			errorMsg = context.getString(R.string.common_network_error);
 		}
 		

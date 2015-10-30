@@ -36,10 +36,6 @@ import android.widget.TextView;
 
 import #{AppPackage}.R;
 import #{AppPackage}.logic.common.BaseConstant;
-import #{AppPackage}.logic.common.values.BannerType;
-import #{AppPackage}.logic.device.DeviceFactory;
-import #{AppPackage}.logic.device.manager.DeviceCallable;
-import #{AppPackage}.logic.network.http.model.vo.GetBannerListRet;
 import #{AppPackage}.logic.upgrade.UpgradeManagerFactory;
 import #{AppPackage}.logic.upgrade.manager.UpgradeCallable;
 import #{AppPackage}.logic.user.UserFactory;
@@ -52,16 +48,12 @@ import #{AppPackage}.ui.fragments.MoreFragment;
 import #{AppPackage}.ui.fragments.MyAssetsFragment;
 import #{AppPackage}.ui.fragments.RecommendFragment;
 import #{AppPackage}.ui.utils.ToastUtil;
-import #{AppPackage}.ui.utils.UserUtil;
 import #{AppPackage}.ui.utils.ViewUtil;
-import #{AppPackage}.ui.widgets.GjfaxDialog;
-import #{AppPackage}.ui.widgets.GuidingDialog;
 import com.luoxudong.app.asynchttp.AsyncHttpUtil;
 import com.luoxudong.app.asynchttp.callable.DownloadRequestCallable;
 import com.luoxudong.app.utils.LogUtil;
 import com.luoxudong.app.utils.MD5;
 import com.luoxudong.app.utils.PackageUtil;
-import com.networkbench.agent.impl.NBSAppAgent;
 import com.umeng.analytics.MobclickAgent;
 
 /**

@@ -13,34 +13,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import #{AppPackage}.logic.account.MyAccoutFactory;
-import #{AppPackage}.logic.account.manager.MyAccountCallable;
 import #{AppPackage}.logic.common.BaseApplication;
 import #{AppPackage}.logic.common.BaseConstant;
 import #{AppPackage}.logic.db.dao.UserInfoDao;
 import #{AppPackage}.logic.db.dao.interfaces.IUserInfoDao;
 import #{AppPackage}.logic.db.model.UserInfo;
-import #{AppPackage}.logic.exception.GjfaxExceptionCode;
+import #{AppPackage}.logic.exception.#{ProjectPrefix}ExceptionCode;
 import #{AppPackage}.logic.network.NetworkApiUtil;
-import #{AppPackage}.logic.network.http.model.request.DefaultReq;
-import #{AppPackage}.logic.network.http.model.request.GetUserFundAccountReq;
-import #{AppPackage}.logic.network.http.model.request.GetUserInfoReq;
 import #{AppPackage}.logic.network.http.model.request.LoginReq;
-import #{AppPackage}.logic.network.http.model.request.RegReq;
-import #{AppPackage}.logic.network.http.model.request.UpdateNickNameReq;
-import #{AppPackage}.logic.network.http.model.request.VerifyInvitationCodeReq;
-import #{AppPackage}.logic.network.http.model.request.VerifyLoginPwdReq;
-import #{AppPackage}.logic.network.http.model.request.VerifyUserNameReq;
 import #{AppPackage}.logic.network.http.model.response.DefaultRsp;
-import #{AppPackage}.logic.network.http.model.response.GetRecommendListRsp;
-import #{AppPackage}.logic.network.http.model.response.GetUserFundAccountRsp;
-import #{AppPackage}.logic.network.http.model.response.GetUserInfoRsp;
 import #{AppPackage}.logic.network.http.model.response.LoginRsp;
-import #{AppPackage}.logic.network.http.model.response.RegRsp;
-import #{AppPackage}.logic.network.http.model.response.VerifyInvitationCodeRsp;
-import #{AppPackage}.logic.network.http.model.vo.GetMyAccountInfoRet;
-import #{AppPackage}.logic.network.http.model.vo.GetUserInfoRet;
-import #{AppPackage}.logic.rewards.RewardsFactory;
 import #{AppPackage}.logic.user.interfaces.IUserManager;
 import #{AppPackage}.logic.utils.ConfigUtil;
 import #{AppPackage}.logic.utils.GlobalUtil;
@@ -81,52 +63,10 @@ public class UserManager implements IUserManager {
 			@Override
 			public void onSuccess(LoginRsp responseInfo) {
 				UserInfo userInfo = new UserInfo();
-				userInfo.setSid(responseInfo.getSessionId());
 				
-				if (responseInfo.getResult() != null){
-					if (!TextUtils.isEmpty(responseInfo.getResult().getActivation())){
-						userInfo.setActivation(Integer.parseInt(responseInfo.getResult().getActivation()));
-					}
-					userInfo.setBindCard("true".equals(responseInfo.getResult().getIsBindCard()) ? 1 : 0);
-					userInfo.setCertiCode(responseInfo.getResult().getCertiCode());
-					userInfo.setCertiCodeAll(responseInfo.getResult().getCertiCodeAll());
-					userInfo.setEmail(responseInfo.getResult().getEmail());
-					userInfo.setEquityAccount(responseInfo.getResult().getFidGqzh());
-					userInfo.setHeadUrl(responseInfo.getResult().getHeadPortraitPath());
-					userInfo.setMobile(responseInfo.getResult().getMobilePhone());
-					userInfo.setNickName(responseInfo.getResult().getNickName());
-					if (!TextUtils.isEmpty(responseInfo.getResult().getNickName())) {
-						ConfigUtil.setUserNameForGesture(responseInfo.getResult().getNickName());
-					}else {
-						ConfigUtil.setUserNameForGesture(responseInfo.getResult().getUserName());
-					}
-					userInfo.setRealName(responseInfo.getResult().getRealName());
-					userInfo.setRecommendCode(responseInfo.getResult().getRecommendCode());
-					userInfo.setSetCert("true".equals(responseInfo.getResult().getIsSetCert()) ? 1 : 0);
-					userInfo.setSetDealpwd("true".equals(responseInfo.getResult().getIsSetDealpwd()) ? 1 : 0);
-					userInfo.setSetPwdAnswer("true".equals(responseInfo.getResult().getIsSetPwdAnswer()) ? 1 : 0);
-					userInfo.setUserId(responseInfo.getResult().getUserId());
-					userInfo.setUserName(responseInfo.getResult().getUserName());
-					userInfo.setValidateEmail("true".equals(responseInfo.getResult().getEmail()) ? 1 : 0);
-				}
-				
-				boolean isAnother = false;
-				if (GlobalUtil.sUserInfo != null && !GlobalUtil.sUserInfo.getUserName().equals(userInfo.getUserName())){//切换用户
-					isAnother = true;
-					ConfigUtil.setNeedGesturePwd(false);
-				}
+				//赋值
 				
 				GlobalUtil.sUserInfo = userInfo;
-				
-				//更新未读奖励状态
-				RewardsFactory.getRewardsManager().checkUnknowAward(BaseApplication.getInstance(), null);
-				if (callable != null){
-					if (isAnother){
-						callable.loginAnother(userInfo);
-					}else{
-						callable.login(userInfo);
-					}
-				}
 			}
 		});
 	}

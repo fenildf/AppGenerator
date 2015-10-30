@@ -12,8 +12,8 @@ package #{AppPackage}.ui.codestyle.simples;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import #{AppPackage}.logic.network.http.GjfaxJsonHttpResponseAdapter;
-import #{AppPackage}.logic.network.http.GjfaxSSLSocketFactory;
+import #{AppPackage}.logic.network.http.#{ProjectPrefix}JsonHttpResponseAdapter;
+import #{AppPackage}.logic.network.http.#{ProjectPrefix}SSLSocketFactory;
 import #{AppPackage}.logic.network.http.model.request.DefaultReq;
 import #{AppPackage}.logic.network.http.model.response.DefaultRsp;
 import com.luoxudong.app.asynchttp.AsyncHttpUtil;

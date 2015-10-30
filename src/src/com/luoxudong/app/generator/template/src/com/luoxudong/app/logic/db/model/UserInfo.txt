@@ -9,11 +9,11 @@
  */
 package #{AppPackage}.logic.db.model;
 
-import #{AppPackage}.logic.common.values.UserState;
 import com.luoxudong.app.database.annotations.DbFields;
 import com.luoxudong.app.database.annotations.DbTables;
 import com.luoxudong.app.database.annotations.Id;
 import com.luoxudong.app.database.annotations.Increment;
+import com.luoxudong.app.database.annotations.Transient;
 import com.luoxudong.app.database.model.BaseModel;
 
 /**
@@ -39,6 +39,9 @@ public class UserInfo extends BaseModel {
 	/** 电子邮箱 */
 	@DbFields(columnName = "email")
 	private String email = null;
+	
+	@Transient
+	private String sid = null;
 	
 	public Integer getId() {
 		return id;
@@ -70,5 +73,13 @@ public class UserInfo extends BaseModel {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public String getSid() {
+		return sid;
+	}
+
+	public void setSid(String sid) {
+		this.sid = sid;
 	}
 }

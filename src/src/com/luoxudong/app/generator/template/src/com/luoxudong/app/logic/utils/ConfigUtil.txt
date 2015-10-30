@@ -15,7 +15,6 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import #{AppPackage}.logic.common.BaseConstant;
-import #{AppPackage}.logic.network.http.model.vo.QueryWXShareInfoRet;
 import com.google.gson.Gson;
 import com.luoxudong.app.utils.FileUtil;
 

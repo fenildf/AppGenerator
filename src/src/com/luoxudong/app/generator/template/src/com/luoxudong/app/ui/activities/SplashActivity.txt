@@ -25,14 +25,6 @@ import android.widget.ImageView;
 
 import #{AppPackage}.R;
 import #{AppPackage}.logic.common.BaseConstant;
-import #{AppPackage}.logic.invest.InvestFactory;
-import #{AppPackage}.logic.invest.manager.InvestCallable;
-import #{AppPackage}.logic.network.http.model.vo.GetNewsResult;
-import #{AppPackage}.logic.network.http.model.vo.NewUserProduct;
-import #{AppPackage}.logic.network.http.model.vo.QueryWXShareInfoRet;
-import #{AppPackage}.logic.network.http.model.vo.RecommendProduct;
-import #{AppPackage}.logic.news.NewsFactory;
-import #{AppPackage}.logic.news.manager.NewsCallable;
 import #{AppPackage}.logic.utils.ConfigUtil;
 import #{AppPackage}.ui.utils.TimeUtil;
 import com.igexin.sdk.PushManager;
@@ -147,8 +139,6 @@ public class SplashActivity extends BaseActivity {
 
 	private void redirectMain() {
 		Intent intent = new Intent(this, MainActivity.class);
-		intent.putExtra(MainActivity.EXTRA_RECOMMEND_PRODUCT, mRecommendProduct);
-		intent.putExtra(MainActivity.EXTRA_NEW_USER_PRODUCT, mNewUserProduct);
 		startActivity(intent);
 		overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 		finish();

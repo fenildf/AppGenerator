@@ -34,7 +34,7 @@ import com.luoxudong.app.utils.LogUtil;
  * Date 2014-8-26 上午9:37:14
  */
 public class #{ProjectPrefix}SSLSocketFactory extends SSLSocketFactory {
-	private static final String TAG = JobsSSLSocketFactory.class.getSimpleName();
+	private static final String TAG = #{ProjectPrefix}SSLSocketFactory.class.getSimpleName();
 	
 	/** ssl上下文*/
 	private SSLContext mSslContext = SSLContext.getInstance("TLS");

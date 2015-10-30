@@ -229,17 +229,4 @@ public class NetworkApiUtil {
 		
 		return headerParams;
 	}
-	
-	/**
-	 * 获取短信验证码cookie
-	 * @return
-	 */
-	public static Map<String, String> getSmsCookie(){
-		Map<String, String> headerParams = new ConcurrentHashMap<String, String>();
-		if (!TextUtils.isEmpty(GlobalUtil.sSmsSessionId)){
-			//headerParams.put("Cookie", "JSESSIONID=" + GlobalUtil.sSmsSessionId);
-		}
-		
-		return headerParams;
-	}
 }

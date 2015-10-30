@@ -90,8 +90,8 @@ public class BaseApplication extends Application{
 		BaseConstant.DATABASE_PATH = getApplicationContext().getDatabasePath(BaseConstant.DATABASE_NAME).getAbsolutePath();
 		
 		//设置http请求返回数据处理机制
-		AsyncHttpUtil.setResponseAdapter(new GjfaxJsonHttpResponseAdapter());
-		//AsyncHttpUtil.setSSLSocketFactory(GjfaxSSLSocketFactory.getInstance());
+		AsyncHttpUtil.setResponseAdapter(new #{ProjectPrefix}JsonHttpResponseAdapter());
+		//AsyncHttpUtil.setSSLSocketFactory(#{ProjectPrefix}SSLSocketFactory.getInstance());
 		ConfigUtil.initSysDirs(this);
 		ConfigUtil.initUserDir(this, null);
 		

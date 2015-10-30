@@ -65,6 +65,8 @@ public class BaseConstant {
 	/** 按返回键退出时间间隔(秒) */
 	public static final float EXIT_APP_CLICK_TIME_INTERVAL = 2;
 	
+	/** 会话超时登录请求码 */
+	public static final int REQUEST_CODE_TIMEOUT_LOGIN = 888;
 	
 	/** 用户信息 */
 	public static final String INTENT_EXTRA_USER_INFO = "userInfo";

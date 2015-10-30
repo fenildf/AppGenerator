@@ -1,0 +1,464 @@
+/**
+ * Title: BaseActivity.java
+ * Description:
+ * Copyright: Copyright (c) 2013 luoxudong.com
+ * Company:个人
+ * Author 罗旭东 (hi@luoxudong.com)
+ * Date 2013-8-06 上午10:10:44
+ * Version 1.0
+ */
+package #{AppPackage}.ui.activities;
+
+import java.util.Iterator;
+import java.util.Stack;
+
+import android.app.Activity;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import #{AppPackage}.R;
+import #{AppPackage}.ui.widgets.LoadingDialog;
+import com.luoxudong.app.utils.LogUtil;
+import com.umeng.analytics.MobclickAgent;
+
+/** 
+ * ClassName: BaseActivity
+ * Description:Activity的基类
+ * Create by 罗旭东
+ * Date 2013-8-06 上午10:10:44
+ */
+public abstract class BaseActivity extends Activity{
+	/** 初始化消息,数值取大一些，避免跟子类中的消息冲突 */
+	private static final int MSG_INIT = Integer.MAX_VALUE - 1;
+	
+	/** 网络异常 */
+	protected static final int MSG_NETWORK_INVALID = Integer.MAX_VALUE - 2;
+	
+	/** sd卡不可用 */
+	protected static final int MSG_SDCARD_UN_READY = Integer.MAX_VALUE - 3;
+	
+	/** 刷新UI */
+	protected static final int MSG_REFRESH_UI = Integer.MAX_VALUE - 4;
+	
+	/** 错误信息 */
+	protected static final int MSG_EXCEPTION = Integer.MAX_VALUE - 5;
+	
+	/** 保存活动activity的栈 */
+	private static Stack<BaseActivity> sActivities = null;
+	
+	/** 屏幕宽度 */
+	protected int mScreenWidth = 0;
+	
+	/** 屏幕高度 */
+	protected int mScreenHeight = 0;
+	
+	/** 密度 */
+	public static float mScale = 0f;
+	
+	/** 标题栏 */
+	private View mTitleView = null;
+	
+	/** 加载框控件 */
+	private LoadingDialog mLoadingDialog = null;
+	
+	/**
+	 * 布局文件ID
+	 * @return 布局文件ID
+	 */
+	protected abstract int getContentViewLayoutResId();
+	
+	/**
+	 * 初始化界面 （加载控件View对象）
+	 *
+	 */
+	protected abstract void onCreateFindView(Bundle savedInstanceState);
+
+	/**
+	 * 加载操作事件（View控件的点击事件响应等，控件的监听方法）
+	 *
+	 */
+	protected abstract void onCreateAddListener(Bundle savedInstanceState);
+
+	/**
+	 * 放入初始化的数据(onCreate主线程加载处理，用于不耗时操作或起线程操作)
+	 *
+	 */
+	protected abstract void onCreateInitData(Bundle savedInstanceState);
+
+	/**
+	 * 线程加载数据（用于后台处理耗时操作，主要用于数据库读取或发送请求操作，该方法中不能有UI操作，有UI操作会有不可预料的异常）
+	 */
+	protected abstract void onCreateTaskLoadData();
+
+	/**
+	 * 线程加载View（后台数据加载完后，用于界面View控件刷新操作，不能有后台耗时处理，会堵塞主线程）
+	 */
+	protected abstract void onCreateTaskAddView();
+	
+	/**
+	 * 刷新UI
+	 */
+	protected void refreshUI(Object obj){};
+	
+	private Handler mBaseHandler = new Handler()
+	{
+		@Override
+		public void handleMessage(Message msg)
+		{
+			switch (msg.what)
+			{
+				case MSG_INIT://activity初始化
+					InitTask initTask = new InitTask();
+					if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1)
+					{
+						initTask.execute();
+					}
+					else
+					{
+						initTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+					}
+					break;
+				case MSG_NETWORK_INVALID://网络异常
+					break;
+				case MSG_SDCARD_UN_READY://SD卡不存在
+					break;
+				case MSG_REFRESH_UI://刷新UI
+					refreshUI(msg.obj);
+					break;
+				case MSG_EXCEPTION://错误信息
+					if (msg.obj != null && msg.obj instanceof Object[])
+					{
+						Object[] errorInfo = (Object[])msg.obj;
+						if (errorInfo.length >= 2 && errorInfo[0] instanceof Integer && errorInfo[2] instanceof String)
+						{
+							handleErrorMsg((Integer)errorInfo[0], (String)errorInfo[1]);
+						}
+						
+					}
+					break;
+				default:
+					super.handleMessage(msg);
+					break;
+			}
+			
+			BaseActivity.this.handleMessage(msg);
+		}
+	};
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+		if (getContentViewLayoutResId() != 0) {
+			setContentView(getContentViewLayoutResId());
+		}
+		
+		DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+		mScreenWidth = dm.widthPixels;//屏幕宽度
+		mScreenHeight = dm.heightPixels;//屏幕高度
+		mScale = dm.density;//密度
+		
+		initTitleView();
+		
+		onCreateFindView(savedInstanceState);
+		
+		onCreateAddListener(savedInstanceState);
+		
+		onCreateInitData(savedInstanceState);
+
+		sendMessage(obtainMessage(MSG_INIT, null));
+		
+		addActivity(this);
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		LogUtil.d("BaseActivity", "正在关闭activity" + this);
+		removeActivity(this);
+		System.gc();
+		
+		super.onDestroy();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPageEnd(getClass().getSimpleName());
+		MobclickAgent.onPause(this);
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onPageStart(getClass().getSimpleName());
+		MobclickAgent.onResume(this);
+	}
+	
+	/**
+	 * 初始化actionbar
+	 */
+	protected void initTitleView(){
+		mTitleView = (View)findViewById(R.id.layout_title);
+	}
+	
+	/**
+	 * actionbar 点击事件
+	 */
+	public void onClick(View v) {
+		
+	}
+	
+	/**
+	 * 设置标题
+	 * @param title
+	 */
+	protected void setWindowTitle(String title){
+		if (mTitleView != null){
+			TextView titleTextView = (TextView)mTitleView.findViewById(R.id.tv_title);
+			titleTextView.setVisibility(View.VISIBLE);
+			titleTextView.setText(title);
+		}
+	}
+	
+	/**
+	 * 默认标题栏
+	 */
+	protected void initDefaultActionBar(){
+		if (mTitleView != null){
+			mTitleView.findViewById(R.id.tv_title).setVisibility(View.VISIBLE);
+			mTitleView.findViewById(R.id.layout_title_style_1).setVisibility(View.GONE);
+			mTitleView.findViewById(R.id.layout_title_style_2).setVisibility(View.GONE);
+			
+			((TextView)mTitleView.findViewById(R.id.tv_title)).setText(getResources().getString(R.string.app_name));
+			
+		}
+	}
+	
+	/**
+	 * 返回按钮样式
+	 */
+	protected void initBackBtnActionBar(){
+		if (mTitleView != null){
+			mTitleView.findViewById(R.id.tv_title).setVisibility(View.VISIBLE);
+			mTitleView.findViewById(R.id.layout_title_style_1).setVisibility(View.VISIBLE);
+			mTitleView.findViewById(R.id.layout_title_style_2).setVisibility(View.GONE);
+		}
+	}
+	
+	/**
+	 * 返回按钮以及右侧文字按钮
+	 */
+	protected void initBackAndRightTextBtnActionBar(String rightText){
+		if (mTitleView != null){
+			mTitleView.findViewById(R.id.tv_title).setVisibility(View.GONE);
+			mTitleView.findViewById(R.id.layout_title_style_1).setVisibility(View.GONE);
+			mTitleView.findViewById(R.id.layout_title_style_2).setVisibility(View.VISIBLE);
+			
+			if (!TextUtils.isEmpty(rightText)){
+				Button textView = (Button)mTitleView.findViewById(R.id.layout_title_style_2).findViewById(R.id.btn_title_right_2);
+				textView.setText(rightText);
+			}
+			
+		}
+	}
+	
+	private class InitTask extends AsyncTask<String, Integer, String>
+	{
+		@Override
+		protected void onPreExecute()
+		{
+			super.onPreExecute();
+		}
+		
+		@Override
+		protected String doInBackground(String... params)
+		{
+			onCreateTaskLoadData();
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(String result)
+		{
+			onCreateTaskAddView();
+		}
+		
+	}
+	
+	/**
+	 * dip转px
+	 * @param dip
+	 * @return
+	 */
+	public static int dip2Px(int dip)
+	{
+		return (int)(dip * mScale + 0.5f);
+	}
+	
+	private void addActivity(BaseActivity baseActivity)
+	{
+		if (sActivities == null)
+		{
+			sActivities = new Stack<BaseActivity>();
+		}
+		
+		sActivities.push(this);
+	}
+	
+	private void removeActivity(BaseActivity baseActivity)
+	{
+		if (sActivities != null && sActivities.contains(baseActivity))
+		{
+			sActivities.remove(baseActivity);
+		}
+	}
+	
+	public static void releaseAllActivities() {
+		if (sActivities != null && !sActivities.empty()) {
+			Iterator<BaseActivity> iterator = sActivities.iterator();
+			while (iterator.hasNext()) {
+				BaseActivity baseActivity = iterator.next();
+				if (baseActivity == null) {
+					continue;
+				}
+
+				baseActivity.finish();
+			}
+			sActivities.clear();
+		}
+	}
+	
+	/**
+	 * 
+	 * @description:获取栈顶的activity对象
+	 * @return
+	 * @return BaseActivity
+	 * @throws
+	 */
+	public static BaseActivity getTopActivity() {
+		if (sActivities != null && !sActivities.empty())
+		{
+			return sActivities.peek();
+		}
+		
+		return null;
+	}
+	
+	protected void handleErrorMsg(int errorCode, String errorMsg){}
+	
+	/**
+	 * 
+	 * @description:消息发送给子类
+	 * @param msg 消息
+	 * @return void
+	 * @throws
+	 */
+	protected void handleMessage(Message msg) {
+	}
+	
+	protected Message obtainMessage(int what, Object obj) {
+        Message msg = null;
+        if(mBaseHandler != null){
+            msg = mBaseHandler.obtainMessage(what, obj);
+        }else{
+            msg = Message.obtain();
+            msg.what = what;
+            msg.obj = obj;
+        }
+        return msg;
+    }
+	
+	protected void sendMessage(Message msg) {
+        if(mBaseHandler != null){
+        	mBaseHandler.sendMessage(msg);
+        } else {
+            handleMessage(msg);
+        }
+    }
+
+	protected void sendMessage(Message msg, long delayMillis) {
+        if(mBaseHandler != null){
+        	mBaseHandler.sendMessageDelayed(msg, delayMillis);
+        } else {
+            handleMessage(msg);
+        }
+    }
+
+	public Handler getBaseHandler() {
+		return mBaseHandler;
+	}
+
+	public void setBaseHandler(Handler baseHandler) {
+		this.mBaseHandler = baseHandler;
+	}
+	
+	/**
+	 * 显示等待框
+	 * 
+	 * @param title
+	 */
+	protected void showLoadingDialog(String msg) {
+		showLoadingDialog(msg, false);
+	}
+	
+	/**
+	 * 显示等待框
+	 * @param msg
+	 * @param cancel 是否可取消
+	 */
+	protected void showLoadingDialog(String msg, boolean cancel) {
+		mLoadingDialog = new LoadingDialog(this);
+		mLoadingDialog.setCanceledOnTouchOutside(false);
+		mLoadingDialog.setCancelable(cancel);
+		mLoadingDialog.setMessage(msg);
+		mLoadingDialog.show();
+	}
+
+	/**
+	 * 隐藏等待框
+	 */
+	protected void hiddenLoadingDialog() {
+		if (mLoadingDialog != null) {
+			mLoadingDialog.dismiss();
+		}
+	}
+	
+	/**
+	 * 是否点击外面可以取消
+	 * @param cancel
+	 */
+	protected void setCanceledOnTouchOutside(boolean cancel){
+		if (mLoadingDialog != null){
+			mLoadingDialog.setCanceledOnTouchOutside(cancel);
+		}
+	}
+	
+	/**
+	 * 是否可取消
+	 * @param flag
+	 */
+	protected void setCancelable(boolean flag){
+		if (mLoadingDialog != null){
+			mLoadingDialog.setCancelable(flag);
+		}
+	}
+}

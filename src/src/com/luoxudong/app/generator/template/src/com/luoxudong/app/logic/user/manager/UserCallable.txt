@@ -13,10 +13,6 @@ import java.util.List;
 
 import #{AppPackage}.logic.common.BaseCallable;
 import #{AppPackage}.logic.db.model.UserInfo;
-import #{AppPackage}.logic.network.http.model.vo.FundAccountRet;
-import #{AppPackage}.logic.network.http.model.vo.GetUserInfoRet;
-import #{AppPackage}.logic.network.http.model.vo.RecommendItem;
-import #{AppPackage}.logic.network.http.model.vo.RegRet;
 
 /** 
  * ClassName: UserCallable

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialog_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/common_dialog_bg"
+    android:paddingBottom="@dimen/common_dialog_padding"
+    android:paddingLeft="@dimen/common_dialog_padding"
+    android:paddingRight="@dimen/common_dialog_padding" >
+
+    <RelativeLayout
+        android:id="@+id/rl_common_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_dialog_title_h"
+        android:layout_centerHorizontal="true" >
+
+        <ImageView
+            android:id="@+id/iv_common_dialog_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/btn_dialog_close" />
+
+        <TextView
+            android:id="@+id/tv_common_dialog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/common_dialog_title"
+            android:textSize="@dimen/common_title_text_size" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_common_dialog_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_common_dialog_title"
+        android:orientation="vertical" >
+        <TextView
+            android:id="@+id/tv_dialog_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/common_dialog_content_margin_t"
+            android:layout_marginLeft="@dimen/common_dialog_content_margin_l"
+            android:layout_marginRight="@dimen/common_dialog_content_margin_l"
+            android:layout_marginTop="@dimen/common_dialog_content_margin_t" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_common_dialog_confirm"
+        android:layout_width="@dimen/common_dialog_btn_w"
+        android:layout_height="@dimen/common_dialog_btn_h"
+        android:layout_below="@id/ll_common_dialog_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/common_dialog_btn_margin_t"
+        android:background="@drawable/btn_dialog_ok"
+        android:text="@string/common_btn_ok"
+        android:textColor="@color/common_white"
+        android:textSize="@dimen/common_title_text_size" />
+
+</RelativeLayout>

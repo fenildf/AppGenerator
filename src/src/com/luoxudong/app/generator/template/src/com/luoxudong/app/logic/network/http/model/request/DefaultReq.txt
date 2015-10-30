@@ -1,0 +1,42 @@
+/**
+ * Title: DefaultReq.java
+ * Description: 
+ * Copyright: Copyright (c) 2013-2015 luoxudong.com
+ * Company: 个人
+ * Author: 罗旭东 (hi@luoxudong.com)
+ * Date: 2015年8月5日 下午6:10:36
+ * Version: 1.0
+ */
+package #{AppPackage}.logic.network.http.model.request;
+
+/** 
+ * <pre>
+ * ClassName: DefaultReq
+ * Description:TODO(这里用一句话描述这个类的作用)
+ * Create by: 罗旭东
+ * Date: 2015年8月5日 下午6:10:36
+ * </pre>
+ */
+public class DefaultReq extends BaseReq<DefaultReq> {
+	private static final long serialVersionUID = 1L;
+
+	private String pageNum = null;
+	
+	private String pageSize = null;
+
+	public String getPageNum() {
+		return pageNum;
+	}
+
+	public void setPageNum(String pageNum) {
+		this.pageNum = pageNum;
+	}
+
+	public String getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(String pageSize) {
+		this.pageSize = pageSize;
+	}
+}

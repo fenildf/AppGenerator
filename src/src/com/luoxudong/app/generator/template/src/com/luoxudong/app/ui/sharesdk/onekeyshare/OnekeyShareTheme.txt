@@ -1,0 +1,3 @@
+package #{AppPackage}.ui.sharesdk.onekeyshare;
+
+public enum OnekeyShareTheme {CLASSIC, SKYBLUE}
