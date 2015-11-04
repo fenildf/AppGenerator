@@ -224,6 +224,7 @@ public class AppGenerator {
 		String shareContent = "";
 		String getuiContent = "";
 		String findLocContent = "";
+		String findLocService = "";
 		
 		if ("true".equals(mProp.getProperty("ShareSDK"))) {//需要分享SDK
 			File shareTempFile = new File(getFilePath(mTempFilePackage, "sharesdk-config.txt"));
@@ -245,12 +246,15 @@ public class AppGenerator {
 			.append("    <uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />").append("\n");
 			
 			findLocContent = "<meta-data android:name=\"com.baidu.lbsapi.API_KEY\" android:value=\"\" /> <!-- 百度定位 -->";
+			
+			findLocService = "<service android:name=\"com.baidu.location.f\" android:enabled=\"true\" android:process=\":remote\"></service>";
 		}
 		
 		content = content.replaceAll("\\#\\{ShareSDKConfig\\}", shareContent);
 		content = content.replaceAll("\\#\\{GeTuiSDKConfig\\}", getuiContent);
 		content = content.replaceAll("\\#\\{Baidulbsapi\\}", findLocContent);
 		content = content.replaceAll("\\#\\{UserPermission\\}", userPermissionBuilder.toString());
+		content = content.replaceAll("\\#\\{BaiduLocConfig\\}", findLocService);
 		
 		return content;
 	}
@@ -300,7 +304,7 @@ public class AppGenerator {
 					}else{
 						if (!"true".equals(mProp.getProperty("ShareSDK")) && (file.getName().indexOf("logo_") == 0 || "oks_strings.xml".equals(file.getName()) || "ssdk_strings.xml".equals(file.getName()))) {//不需要分享SDK
 							continue;
-						}else if (!"true".equals(mProp.getProperty("PushSDK")) && (file.getName().indexOf("getui_") == 0 || "push.png".equals(file.getName()))) {//不需要推送SDK
+						}else if (!"true".equals(mProp.getProperty("PushSDK")) && (file.getName().indexOf("getui_") == 0 || "push.png".equals(file.getName()) || "increment_popup_dialog.xml".equals(file.getName()) || "notification_inc.xml".equals(file.getName()))) {//不需要推送SDK
 							continue;
 						}
 						
