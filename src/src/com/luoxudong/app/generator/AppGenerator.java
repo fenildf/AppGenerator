@@ -233,8 +233,8 @@ public class AppGenerator {
 		if ("true".equals(mProp.getProperty("PushSDK"))) {//需要推送SDK
 			userPermissionBuilder.append("    <uses-permission android:name=\"android.permission.SYSTEM_ALERT_WINDOW\" />").append("\n")
 			.append("    <uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\" />").append("\n")
-			.append("    <uses-permission android:name=\"getui.permission.GetuiService.com.gjfax.app\" />").append("\n")
-			.append("    <permission android:name=\"getui.permission.GetuiService.\"" + mAppPackage + " android:protectionLevel=\"normal\"/>").append("\n");
+			.append("    <uses-permission android:name=\"getui.permission.GetuiService." + mAppPackage + "\" />").append("\n")
+			.append("    <permission android:name=\"getui.permission.GetuiService." + mAppPackage + "\" android:protectionLevel=\"normal\"/>").append("\n");
 			
 			File getuiTempFile = new File(getFilePath(mTempFilePackage, "getuisdk-config.txt"));
 			getuiContent = readTpl(getuiTempFile);
