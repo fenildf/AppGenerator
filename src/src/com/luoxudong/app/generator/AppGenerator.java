@@ -277,7 +277,7 @@ public class AppGenerator {
 							continue;
 						}else if (!"true".equals(mProp.getProperty("PushSDK")) && (file.getName().indexOf("Getui") == 0 || "libgetuiext.so".equals(file.getName()))) {//不需要推送SDK
 							continue;
-						}else if (!"true".equals(mProp.getProperty("FindLocSDK")) && (file.getName().indexOf("BaiduLBS") == 0 || "liblocSDK5.so".equals(file.getName()))) {//不需要定位SDK
+						}else if (!"true".equals(mProp.getProperty("FindLocSDK")) && (file.getName().indexOf("BaiduLBS") == 0 || file.getName().indexOf("libloc.so") == 0)) {//不需要定位SDK
 							continue;
 						}
 						
